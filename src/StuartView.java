@@ -193,10 +193,14 @@ public class StuartView extends JFrame{
     }
 
     public double printGPA(){
-        for (Grade grade : grades){
-            int kp = Integer.parseInt(grade.kurspoäng);
-            count+= kp;
-            res += grade.grade*kp;
+        try {
+            for (Grade grade : grades) {
+                int kp = Integer.parseInt(grade.kurspoäng);
+                count += kp;
+                res += grade.grade * kp;
+            }
+        } catch (Exception e){
+            JOptionPane.showMessageDialog(this,"Fel format på input");
         }
 
         return (res/count);
