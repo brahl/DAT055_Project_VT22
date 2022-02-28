@@ -1,7 +1,4 @@
 import javax.swing.*;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
-import javax.xml.crypto.Data;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -37,10 +34,9 @@ public class StuartView extends JFrame{
 
 
 
-    private double res;
-    private double count;
+
     JFrame frame = new JFrame("STU.ART");
-    String[][] gradesession = new String[100][4];
+
 
     Grades grades = new Grades();
 
@@ -95,38 +91,24 @@ public class StuartView extends JFrame{
 
         });
 
-        listCourses.addListSelectionListener(new ListSelectionListener() {
-            @Override
-            public void valueChanged(ListSelectionEvent e) {
+        listCourses.addListSelectionListener(e -> {
 
-            }
         });
 
-        updateEmail.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
+        updateEmail.addActionListener(e -> {
 
-                String newEmail = JOptionPane.showInputDialog("Enter new email");
-                Database.updateEmail(user,newEmail);
-                emailLabel.setText(Database.readEmail(user));
+            String newEmail = JOptionPane.showInputDialog("Enter new email");
+            Database.updateEmail(user,newEmail);
+            emailLabel.setText(Database.readEmail(user));
 
-            }
         });
-        updatePassword.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String newPassw = JOptionPane.showInputDialog("Enter new password");
-                Database.updatePassword(user,newPassw);
-                passwordProfilLabel.setText(Database.readPassword(user));
+        updatePassword.addActionListener(e -> {
+            String newPassw = JOptionPane.showInputDialog("Enter new password");
+            Database.updatePassword(user,newPassw);
+            passwordProfilLabel.setText(Database.readPassword(user));
 
-            }
         });
-        minaBetygBtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                tabbedPane1.setSelectedIndex(1);
-            }
-        });
+        minaBetygBtn.addActionListener(e -> tabbedPane1.setSelectedIndex(1));
     }
 
     private void initProfilView(String user) {
@@ -141,7 +123,7 @@ public class StuartView extends JFrame{
      * @param user target user
      */
     private void initMinaBetygView(String user, Database db) {
-        listModel = new DefaultListModel<String>();
+        listModel = new DefaultListModel<>();
         listCourses.setModel(listModel);
         initCourseLabel(user,db);
         meritLabel.setText("Merit: "+ grades.printGPA());
@@ -156,6 +138,7 @@ public class StuartView extends JFrame{
         Grades gs = db.readDatabaseGrades(user);
 
         for(Grade g : gs){
+            System.out.println(g.kurs);
             grades.addGrade(new Grade(g.kurs, g.kurspoäng, g.lettergrade));
             courselistitem = g.kurs+" "+g.kurspoäng+ " "+ g.lettergrade;
             listModel.addElement(courselistitem);
