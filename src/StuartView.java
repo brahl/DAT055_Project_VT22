@@ -84,13 +84,7 @@ public class StuartView extends JFrame{
 
         });
 
-        updateEmail.addActionListener(e -> {
 
-            String newEmail = JOptionPane.showInputDialog("Enter new email");
-            Database.updateEmail(user,newEmail);
-            emailLabel.setText(Database.readEmail(user));
-
-        });
         updatePassword.addActionListener(e -> {
             String newPassw = JOptionPane.showInputDialog("Enter new password");
             Database.updatePassword(user,newPassw);
@@ -98,6 +92,15 @@ public class StuartView extends JFrame{
 
         });
         minaBetygBtn.addActionListener(e -> tabbedPane1.setSelectedIndex(1));
+
+        updateEmail.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String newEmail = JOptionPane.showInputDialog("Enter new email");
+                Database.updateEmail(user,newEmail);
+                emailLabel.setText(Database.readEmail(user));
+            }
+        });
     }
 
     private void initProfilView(String user) {

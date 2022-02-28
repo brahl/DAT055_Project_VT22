@@ -146,7 +146,9 @@ public class Database {
         }
         return finalResult;
     }
-
+    /**
+     * TODO Issues, not updating email and password @Viktor
+     */
     //update, add and remove model methods ------------------------------------------------------------------------------------------------------
     public static void dBaseUpdater(String updateType, String userID, String updateData){
         File originalFile = new File("src/dBase.txt");
