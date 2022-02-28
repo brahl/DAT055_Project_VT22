@@ -33,24 +33,19 @@ public class StuartView extends JFrame{
     private String courselistitem;
 
     JFrame frame = new JFrame("STU.ART");
-
     Grades grades = new Grades();
-
-
-
+    Database db = new Database();
 
     public StuartView(String user){
-        Database db = new Database();
+
+
         initMinaBetygView(user,db);
         initProfilView(user);
 
         frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
-
-
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         frame.setUndecorated(false);
         frame.setVisible(true);
-
         ImageIcon image = new ImageIcon("Stuart.png");
         frame.setIconImage(image.getImage());
         frame.getContentPane().setBackground(new Color(0xFFFFFFF));
@@ -63,17 +58,13 @@ public class StuartView extends JFrame{
                 //add to session
                 grades.addGrade(new Grade(kursField.getText(),betygField.getText(),pointsField.getText()));
                 Database.addGrade(user,kursField.getText(),pointsField.getText(),betygField.getText());
-
                 //empty input fields
                 kursField.setText("");
                 betygField.setText("");
                 pointsField.setText("");
-
                 //updateJlist
                 updateCourseLabel();
-
             }
-
             private void updateCourseLabel() {
                 listModel.removeAllElements();
                 for(Grade g : grades){
@@ -83,7 +74,6 @@ public class StuartView extends JFrame{
                 meritLabel.setText("Merit: "+ grades.printGPA());
                 meritProfilLabel.setText("Merit: "+ grades.printGPA());
             }
-
 
         });
 
@@ -146,7 +136,6 @@ public class StuartView extends JFrame{
 
     public Component showView() {
         StuartPanel.setBackground(Color.WHITE);
-
         return StuartPanel;
     }
 
