@@ -1,7 +1,4 @@
 import javax.swing.*;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
-import javax.xml.crypto.Data;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -35,30 +32,20 @@ public class StuartView extends JFrame{
     private JPanel StuartPanel;
     private String courselistitem;
 
-
-
-    private double res;
-    private double count;
     JFrame frame = new JFrame("STU.ART");
-    String[][] gradesession = new String[100][4];
-
     Grades grades = new Grades();
-
-
-
+    Database db = new Database();
 
     public StuartView(String user){
-        Database db = new Database();
+
+
         initMinaBetygView(user,db);
         initProfilView(user);
 
         frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
-
-
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         frame.setUndecorated(false);
         frame.setVisible(true);
-
         ImageIcon image = new ImageIcon("Stuart.png");
         frame.setIconImage(image.getImage());
         frame.getContentPane().setBackground(new Color(0xFFFFFFF));
@@ -71,17 +58,13 @@ public class StuartView extends JFrame{
                 //add to session
                 grades.addGrade(new Grade(kursField.getText(),betygField.getText(),pointsField.getText()));
                 Database.addGrade(user,kursField.getText(),pointsField.getText(),betygField.getText());
-
                 //empty input fields
                 kursField.setText("");
                 betygField.setText("");
                 pointsField.setText("");
-
                 //updateJlist
                 updateCourseLabel();
-
             }
-
             private void updateCourseLabel() {
                 listModel.removeAllElements();
                 for(Grade g : grades){
@@ -92,41 +75,26 @@ public class StuartView extends JFrame{
                 meritProfilLabel.setText("Merit: "+ grades.printGPA());
             }
 
+        });
+
+        listCourses.addListSelectionListener(e -> {
 
         });
 
-        listCourses.addListSelectionListener(new ListSelectionListener() {
-            @Override
-            public void valueChanged(ListSelectionEvent e) {
+        updateEmail.addActionListener(e -> {
 
-            }
+            String newEmail = JOptionPane.showInputDialog("Enter new email");
+            Database.updateEmail(user,newEmail);
+            emailLabel.setText(Database.readEmail(user));
+
         });
+        updatePassword.addActionListener(e -> {
+            String newPassw = JOptionPane.showInputDialog("Enter new password");
+            Database.updatePassword(user,newPassw);
+            passwordProfilLabel.setText(Database.readPassword(user));
 
-        updateEmail.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-                String newEmail = JOptionPane.showInputDialog("Enter new email");
-                Database.updateEmail(user,newEmail);
-                emailLabel.setText(Database.readEmail(user));
-
-            }
         });
-        updatePassword.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String newPassw = JOptionPane.showInputDialog("Enter new password");
-                Database.updatePassword(user,newPassw);
-                passwordProfilLabel.setText(Database.readPassword(user));
-
-            }
-        });
-        minaBetygBtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                tabbedPane1.setSelectedIndex(1);
-            }
-        });
+        minaBetygBtn.addActionListener(e -> tabbedPane1.setSelectedIndex(1));
     }
 
     private void initProfilView(String user) {
@@ -141,7 +109,7 @@ public class StuartView extends JFrame{
      * @param user target user
      */
     private void initMinaBetygView(String user, Database db) {
-        listModel = new DefaultListModel<String>();
+        listModel = new DefaultListModel<>();
         listCourses.setModel(listModel);
         initCourseLabel(user,db);
         meritLabel.setText("Merit: "+ grades.printGPA());
@@ -156,6 +124,7 @@ public class StuartView extends JFrame{
         Grades gs = db.readDatabaseGrades(user);
 
         for(Grade g : gs){
+            System.out.println(g.kurs);
             grades.addGrade(new Grade(g.kurs, g.kurspoäng, g.lettergrade));
             courselistitem = g.kurs+" "+g.kurspoäng+ " "+ g.lettergrade;
             listModel.addElement(courselistitem);
@@ -167,7 +136,6 @@ public class StuartView extends JFrame{
 
     public Component showView() {
         StuartPanel.setBackground(Color.WHITE);
-
         return StuartPanel;
     }
 
