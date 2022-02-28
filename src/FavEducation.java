@@ -18,6 +18,9 @@ public class FavEducation {
         this.admissionM2 = "";
         this.admissionM1 = "";
     }
+
+    public FavEducation(String pName, String uni, String credits, String admissionM1, String admissionM2, String admissionM3, String admissionM4, String admissionM5){
+    }
     /*public favEducation(String name, String lg, String kp){
         if(Objects.equals(lg, "A")){
             this.grade=20;
