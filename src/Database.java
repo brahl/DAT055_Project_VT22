@@ -108,8 +108,7 @@ public class Database {
                         g.kurs = result.substring(charIndex(result, "@", i)+1, charIndex(result, ":", j));
                         g.kurspoäng = result.substring(charIndex(result, ":", j)+1, charIndex(result, ":", j+1));
                         g.lettergrade = result.substring(charIndex(result, ":", j+1)+1, charIndex(result, "@", i+1));
-                        gs.addGrade(g);
-                        System.out.println(gs);
+                        gs.addGrade(new Grade(g.kurs,g.kurspoäng,g.lettergrade));
                         i++;
                         j = j+2;
                     }
