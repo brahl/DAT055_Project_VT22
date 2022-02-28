@@ -327,7 +327,9 @@ public class Database {
                         JOptionPane.showMessageDialog(panel, "You have not taken this the course: " + course + " yet so you can't remove it :(", "Warning", JOptionPane.WARNING_MESSAGE);
                         throw new ArithmeticException("Coursename does not exist");
                     }
-                    line = line.substring(0,charIndex(line, course,0)-1) + line.substring(line.indexOf("@", charIndex(line, course,0)),line.lastIndexOf("@"));
+
+                    line = line.substring(0,charIndex(line, course,0)-1) + line.substring(line.indexOf("@", charIndex(line, course,0)),line.lastIndexOf("@")) + "@";
+
                     i++;
                 }
                 pw.println(line);
