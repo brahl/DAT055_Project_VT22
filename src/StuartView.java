@@ -33,7 +33,7 @@ public class StuartView extends JFrame{
     private JList<String> listCourses;
     private JPanel StuartPanel;
     private String courselistitem;
-    private final String user = "001";
+
 
 
     private double res;
@@ -46,10 +46,10 @@ public class StuartView extends JFrame{
 
 
 
-    public StuartView(){
+    public StuartView(String user){
         Database db = new Database();
-        initMinaBetygView();
-        initProfilView();
+        initMinaBetygView(user);
+        initProfilView(user);
 
         frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
         frame.setSize(600,600);
@@ -59,40 +59,34 @@ public class StuartView extends JFrame{
         frame.add(showView());
         frame.setVisible(true);
 
-
-
-        addCourse.addActionListener(new ActionListener() {
+   addCourse.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                newGrade(kursField.getText(),betygField.getText(),pointsField.getText());
-                Database.addGrade("001",kursField.getText(),pointsField.getText(),betygField.getText());
+                //add to session
+                grades.addGrade(new Grade(kursField.getText(),betygField.getText(),pointsField.getText()));
+                Database.addGrade(user,kursField.getText(),pointsField.getText(),betygField.getText());
+
+                //empty input fields
                 kursField.setText("");
                 betygField.setText("");
                 pointsField.setText("");
+
+                //updateJlist
                 updateCourseLabel();
 
             }
 
             private void updateCourseLabel() {
                 listModel.removeAllElements();
-                int n=0;
                 for(Grade g : grades){
-                    n++;
-                    courselistitem = coursesToLabels(unpackGradeObjects(),n)+" "+pointToLabel(unpackGradeObjects(),n)+ " "+ betygToLabel(unpackGradeObjects(),n);
+                    courselistitem = g.kurs + " " + g.kurspoäng + " "+ g.lettergrade;
                     listModel.addElement(courselistitem);
                 }
-
+                meritLabel.setText("Merit: "+ grades.printGPA());
+                meritProfilLabel.setText("Merit: "+ grades.printGPA());
             }
 
-            private String coursesToLabels(String[][] courses,int n) {
-                return courses[n][1];
-            }
-            private String pointToLabel(String[][] courses,int n) {
-                return courses[n][2];
-            }
-            private String betygToLabel(String[][] courses,int n) {
-                return courses[n][3];
-            }
+
         });
 
         listCourses.addListSelectionListener(new ListSelectionListener() {
@@ -121,90 +115,48 @@ public class StuartView extends JFrame{
 
             }
         });
+        minaBetygBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                tabbedPane1.setSelectedIndex(1);
+            }
+        });
     }
 
-    private void initProfilView() {
+    private void initProfilView(String user) {
         nameLabel.setText(Database.readFirstName(user)+" "+Database.readLastName(user));
         emailLabel.setText(Database.readEmail(user));
-
+        passwordProfilLabel.setText(Database.readPassword(user));
+        meritProfilLabel.setText(Double.toString(grades.printGPA()));
     }
 
-
-    private void initMinaBetygView() {
+    /**
+     * Sets initial courselist and merit
+     * @param user target user
+     */
+    private void initMinaBetygView(String user) {
         listModel = new DefaultListModel<String>();
         listCourses.setModel(listModel);
-        initCourseLabel();
-
-
-        meritLabel.setText("Merit: "+ printGPA());
-
-
-
-
+        initCourseLabel(user);
+        meritLabel.setText("Merit: "+ grades.printGPA());
     }
 
-
-    public void initCourseLabel() {
+    /**
+     * Reads grades for user in database, adds to listmodel.
+     * @param user target user
+     */
+    public void initCourseLabel(String user) {
         listModel.removeAllElements();
 
-        System.out.println(Database.countGrades(user));
-
         for(int i = 0; i<Database.countGrades(user)+1;i++){
-
-            newGrade(Database.readDatabaseGrades(user)[i][0], Database.readDatabaseGrades(user)[i][2], Database.readDatabaseGrades(user)[i][1]);
+            grades.addGrade(new Grade(Database.readDatabaseGrades(user)[i][0], Database.readDatabaseGrades(user)[i][2], Database.readDatabaseGrades(user)[i][1]));
             courselistitem = Database.readDatabaseGrades(user)[i][0]+" "+Database.readDatabaseGrades(user)[i][1]+ " "+ Database.readDatabaseGrades(user)[i][2];
-            System.out.println(courselistitem);
             listModel.addElement(courselistitem);
 
         }
 
     }
 
-
-    public void newGrade(String k, String lg, String kp){
-        grades.addGrade(new Grade(k,lg,kp));
-        //denna kan ligga lite var som, kör den här sålänge.
-        meritLabel.setText("Merit: "+ printGPA());
-    }
-
-
-    public String[][] unpackGradeObjects(){
-        int count = 0;
-        for(Grade grade : grades){
-            count++;
-            if(grade.kurs != null){
-                String kurs = grade.kurs;
-                String point = grade.kurspoäng;
-                String betyg = grade.lettergrade;
-                gradesession[count][1] = kurs;
-                gradesession[count][2]= point;
-                gradesession[count][3]= betyg;
-            }
-            else{
-                String kurs = " ";
-                String point = " ";
-                String betyg = " ";
-                gradesession[count][1] = kurs;
-                gradesession[count][2]= point;
-                gradesession[count][3]= betyg;
-            }
-        }
-        return gradesession;
-    }
-
-    public double printGPA(){
-        try {
-            for (Grade grade : grades) {
-                int kp = Integer.parseInt(grade.kurspoäng);
-                count += kp;
-                res += grade.grade * kp;
-            }
-        } catch (Exception e){
-            JOptionPane.showMessageDialog(this,"Fel format på input");
-        }
-
-        return (res/count);
-    }
 
     public Component showView() {
         StuartPanel.setBackground(Color.WHITE);

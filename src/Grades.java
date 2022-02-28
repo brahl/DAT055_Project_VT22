@@ -1,3 +1,4 @@
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -65,6 +66,22 @@ public class Grades implements Iterable<Grade>{
     public int length(){
         return grades.size();
     }
+    public double printGPA(){
+        double count=0;
+        double res=0;
+        try {
+            for (Grade grade : grades) {
+                int kp = Integer.parseInt(grade.kurspoäng);
+                count += kp;
+                res += grade.grade * kp;
+            }
+        } catch (Exception e){
+            System.out.println("Fel format på input");
+        }
+
+        return (res/count);
+    }
+
 
 
 

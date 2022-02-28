@@ -2,7 +2,8 @@ import java.io.IOException;
 
 public class App {
     public static void main(String[] args) throws IOException {
-        new StuartView();
+        String user = "001";
+        new StuartView(user);
         new ProfilView();
         new Database();
 
