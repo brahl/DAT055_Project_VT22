@@ -1,3 +1,4 @@
+import javax.swing.*;
 import java.util.Scanner;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -17,56 +18,17 @@ public class Database {
 
     //reader methods ------------------------------------------------------------------------------------------------------
     public static String readEmail(String userID){
-      return readDatabase("email", userID);
+      return readDatabase(0, userID);
     }
     public static String readFirstName(String userID){
-        return readDatabase("fName", userID);
+        return readDatabase(1, userID);
     }
     public static String readLastName(String userID){
-        return readDatabase("lName", userID);
+        return readDatabase(2, userID);
     }
     public static String readPassword(String userID){
-        return readDatabase("password", userID);
+        return readDatabase(3, userID);
     }
-    /* public static void readGrades(String userID){
-       String user = userID;
-       System.out.println(user + "'s courses:");
-       for(int i = 0; i < 10; i++){
-
-
-          // if(readDatabaseGrades(user)[i][0] == null){
-            //   break;
-           //}
-
-          // System.out.println("  CourseName: " + readDatabaseGrades(user)[i][0]);
-          // System.out.println("        Credits: " + readDatabaseGrades(user)[i][1]);
-          // System.out.println("        Grade: " + readDatabaseGrades(user)[i][2]);
-
-       }
-   }
-
-    */
-    /*public static void readTargetEducation(String userID){
-       String user = userID;
-       System.out.println(user + "'s target education:");
-       for(int i = 0; i < 20; i++){
-
-
-           if(readDatabaseFavCourses(user)[i][0] == null){
-               break;
-           }
-
-           System.out.println("  ProgramName: " + readDatabaseFavCourses(user)[i][0]);
-           System.out.println("        UniName: " + readDatabaseFavCourses(user)[i][1]);
-           System.out.println("        ProgramCredits: " + readDatabaseFavCourses(user)[i][2]);
-           System.out.println("        AdmissionPoints 2017: " + readDatabaseFavCourses(user)[i][3]);
-           System.out.println("        AdmissionPoints 2018: " + readDatabaseFavCourses(user)[i][4]);
-           System.out.println("        AdmissionPoints 2019: " + readDatabaseFavCourses(user)[i][5]);
-           System.out.println("        AdmissionPoints 2020: " + readDatabaseFavCourses(user)[i][6]);
-           System.out.println("        AdmissionPoints 2021: " + readDatabaseFavCourses(user)[i][7]);
-
-       }
-   }*/
 
     //Update caller methods ------------------------------------------------------------------------------------------------------
     public static void updateEmail(String userID, String email){
@@ -88,8 +50,8 @@ public class Database {
 
     //reader model methods ------------------------------------------------------------------------------------------------------
     public Grades readDatabaseGrades(String userID){
-        try {
-            Scanner scanner = new Scanner(new File("src/dBase.txt"));
+        try(Scanner scanner = new Scanner(new File("src/dBase.txt"));) {
+            //Scanner scanner = new Scanner(new File("src/dBase.txt"));
             while (scanner.hasNextLine()) {
                 if(scanner.nextLine().equals(userID)) {
                     for(int i = 0; i < 4; i++){
@@ -114,7 +76,7 @@ public class Database {
                     }
                 }
             }
-            scanner.close();
+            //scanner.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -123,8 +85,8 @@ public class Database {
 
 
     public FavEducations readDatabaseFavCourses(String userID){
-        try {
-            Scanner scanner = new Scanner(new File("src/dBase.txt"));
+        try (Scanner scanner = new Scanner(new File("src/dBase.txt"));){
+            //Scanner scanner = new Scanner(new File("src/dBase.txt"));
             while (scanner.hasNextLine()) {
                 if(scanner.nextLine().equals(userID)) {
                     for(int i = 0; i < 5; i++){
@@ -154,33 +116,22 @@ public class Database {
                     }
                 }
             }
-            scanner.close();
+            //scanner.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
         return fes;
     }
-    public static String readDatabase(String readType, String userID){
-        if(readType != "email" || readType != "fName" || readType != "lName" || readType != "password"){
-            //throw new Exception("there is no readtype named specified as:" + readType);
+    public static String readDatabase(int readType, String userID){
+        int index = 0;
+        if(readType == 0 || readType == 1 || readType == 2 || readType == 3){
+            index = readType;
+        }else{
+            throw new ArithmeticException("The readtype you have specified does not exist");
         }
         String finalResult = "";
-        int index = 0;
 
-        if(readType == "email"){
-            index = 0;
-        }
-        if(readType == "fName"){
-            index = 1;
-        }
-        if(readType == "lName"){
-            index = 2;
-        }
-        if(readType == "password"){
-            index = 3;
-        }
-        try {
-            Scanner scanner = new Scanner(new File("src/dBase.txt"));
+        try (Scanner scanner = new Scanner(new File("src/dBase.txt"));){
             while (scanner.hasNextLine()) {
                 if(scanner.nextLine().equals(userID)) {
                     while(index != 0) {
@@ -189,10 +140,9 @@ public class Database {
                     }
                     String result = scanner.nextLine();
                     finalResult = result.substring(result.indexOf(" "));
-                    System.out.println(finalResult);
                 }
             }
-            scanner.close();
+            //scanner.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -201,39 +151,26 @@ public class Database {
 
     //update and add model methods ------------------------------------------------------------------------------------------------------
     public static void dBaseUpdater(String updateType, String userID, String updateData){
-        try {
-
-            Scanner scanner = new Scanner(System.in);
-
-            File originalFile = new File("src/dBase.txt");
-
-            BufferedReader br = new BufferedReader(new FileReader(originalFile));
-            // Construct the new file that will later be renamed to the original
-            // filename.
-            File tempFile = new File("tempfile.txt");
-            PrintWriter pw = new PrintWriter(new FileWriter(tempFile));
+        File originalFile = new File("src/dBase.txt");
+        File tempFile = new File("tempfile.txt");
+        try (BufferedReader br = new BufferedReader(new FileReader(originalFile));
+             PrintWriter pw = new PrintWriter(new FileWriter(tempFile));){
 
             String line = null;
-            // Read from the original file and write to the new
-            // unless content matches data to be removed.
             int i = 0;
             while ((line = br.readLine()) != null) {
                 if(line.contains(userID)) {
                     i++;
                 }
                 if (line.contains(updateType) && i == 1) {
-                    String strCurrentEmail = line.substring(line.lastIndexOf(" "), line.length());
-                    if (strCurrentEmail != null || !strCurrentEmail.trim().isEmpty()) {
-                        System.out.println(strCurrentEmail);
-                        line = line.substring(0, line.lastIndexOf(" ")) + " " + updateData;
-                    }
+                    line = line.substring(0, line.lastIndexOf(" ")) + " " + updateData;
                     i++;
                 }
                 pw.println(line);
                 pw.flush();
             }
-            pw.close();
-            br.close();
+            //pw.close();
+            //br.close();
 
             // Delete the original file
             if (!originalFile.delete()) {
@@ -252,32 +189,20 @@ public class Database {
         }
     }
     public static void addUser(String userID, String email, String fName, String lName){
-        try {
-
-            Scanner scanner = new Scanner(System.in);
-
-            File originalFile = new File("src/dBase.txt");
-
-            BufferedReader br = new BufferedReader(new FileReader(originalFile));
-            // Construct the new file that will later be renamed to the original
-            // filename.
-            File tempFile = new File("tempfile.txt");
-            PrintWriter pw = new PrintWriter(new FileWriter(tempFile));
+        File originalFile = new File("src/dBase.txt");
+        File tempFile = new File("tempfile.txt");
+        try ( BufferedReader br = new BufferedReader(new FileReader(originalFile));
+              PrintWriter pw = new PrintWriter(new FileWriter(tempFile));){
 
             String line = null;
-            // Read from the original file and write to the new
-            // unless content matches data to be removed.
             int i = 0;
             while ((line = br.readLine()) != null) {
-
-                //checks for invalid inputs
                 if(line.contains(userID)){
                     throw new ArithmeticException("UserID already exists");
                 }
                 if(line.contains(email) && email.length() == line.length()){
                     throw new ArithmeticException("Email already exists");
                 }
-
                 pw.println(line);
                 pw.flush();
             }
@@ -294,7 +219,6 @@ public class Database {
                 System.out.println("Could not delete file");
                 return;
             }
-
             // Rename the new file to the filename the original file had.
             if (!tempFile.renameTo(originalFile))
                 System.out.println("Could not rename file");
@@ -306,32 +230,25 @@ public class Database {
         }
     }
     public static void addGrade(String userID, String course, String credits, String grade){
-        try {
+        File originalFile = new File("src/dBase.txt");
+        File tempFile = new File("tempfile.txt");
 
-            Scanner scanner = new Scanner(System.in);
-
-            File originalFile = new File("src/dBase.txt");
-
-            BufferedReader br = new BufferedReader(new FileReader(originalFile));
-            // Construct the new file that will later be renamed to the original
-            // filename.
-            File tempFile = new File("tempfile.txt");
-            PrintWriter pw = new PrintWriter(new FileWriter(tempFile));
+        try ( BufferedReader br = new BufferedReader(new FileReader(originalFile));
+              PrintWriter pw = new PrintWriter(new FileWriter(tempFile));){
 
             String line = null;
-            // Read from the original file and write to the new
-            // unless content matches data to be removed.
             int i = 0;
             while ((line = br.readLine()) != null) {
                 if(line.contains(userID)) {
                     i++;
                 }
                 if (line.contains("grades") && i == 1) {
-                    String strCurrentEmail = line.substring(line.lastIndexOf("@"), line.length());
-                    if (strCurrentEmail != null || !strCurrentEmail.trim().isEmpty()) {
-                        System.out.println(strCurrentEmail);
-                        line = line.substring(0, line.lastIndexOf("@"))+ "@" + course + ":" + credits + ":" + grade + "@";
+                    if(line.contains(course)){
+                        JPanel panel = new JPanel();
+                        JOptionPane.showMessageDialog(panel, "You already have a grade for the course: " + course + " :)", "Warning", JOptionPane.WARNING_MESSAGE);
+                        throw new ArithmeticException("Coursename already exists");
                     }
+                    line = line.substring(0, line.lastIndexOf("@"))+ "@" + course + ":" + credits + ":" + grade + "@";
                     i++;
                 }
                 pw.println(line);
@@ -357,32 +274,19 @@ public class Database {
         }
     }
     public static void addTargetEducation(String userID, String programName, String university, String programCredits, String admission2017, String admission2018, String admission2019, String admission2020, String admission2021){
-        try {
-
-            Scanner scanner = new Scanner(System.in);
-
-            File originalFile = new File("src/dBase.txt");
-
-            BufferedReader br = new BufferedReader(new FileReader(originalFile));
-            // Construct the new file that will later be renamed to the original
-            // filename.
-            File tempFile = new File("tempfile.txt");
-            PrintWriter pw = new PrintWriter(new FileWriter(tempFile));
+        File originalFile = new File("src/dBase.txt");
+        File tempFile = new File("tempfile.txt");
+        try (BufferedReader br = new BufferedReader(new FileReader(originalFile));
+             PrintWriter pw = new PrintWriter(new FileWriter(tempFile));){
 
             String line = null;
-            // Read from the original file and write to the new
-            // unless content matches data to be removed.
             int i = 0;
             while ((line = br.readLine()) != null) {
                 if(line.contains(userID)) {
                     i++;
                 }
                 if (line.contains("fEdus") && i == 1) {
-                    String strCurrentEmail = line.substring(line.lastIndexOf("@"), line.length());
-                    if (strCurrentEmail != null || !strCurrentEmail.trim().isEmpty()) {
-                        System.out.println(strCurrentEmail);
-                        line = line.substring(0, line.lastIndexOf("@"))+ "@" + programName + ":" + university + ":" + programCredits + ":" + admission2017 + ":" + admission2018 + ":" + admission2019 + ":" + admission2020 + ":" + admission2021 + "@";
-                    }
+                    line = line.substring(0, line.lastIndexOf("@"))+ "@" + programName + ":" + university + ":" + programCredits + ":" + admission2017 + ":" + admission2018 + ":" + admission2019 + ":" + admission2020 + ":" + admission2021 + "@";
                     i++;
                 }
                 pw.println(line);
@@ -408,21 +312,53 @@ public class Database {
         }
     }
 
-        //NOT IMPLEMENTED
-        public static void changeGrade(String userID, String course, String grade){
+    public static void removeGrade(String userID, String course){
+        File originalFile = new File("src/dBase.txt");
+        File tempFile = new File("tempfile.txt");
+        try (BufferedReader br = new BufferedReader(new FileReader(originalFile));
+             PrintWriter pw = new PrintWriter(new FileWriter(tempFile));){
 
-    }
-        public static void removeGrade(String userID, String course, String grade){
-
+            String line = null;
+            int i = 0;
+            while ((line = br.readLine()) != null) {
+                if(line.contains(userID)) {
+                    i++;
+                }
+                if (line.contains("grades") && i == 1) {
+                    if(!line.contains(course)){
+                        JPanel panel = new JPanel();
+                        JOptionPane.showMessageDialog(panel, "You have not taken this the course: " + course + " yet so you can't remove it :(", "Warning", JOptionPane.WARNING_MESSAGE);
+                        throw new ArithmeticException("Coursename does not exist");
+                    }
+                    line = line.substring(0,charIndex(line, course,0)-1) + line.substring(line.indexOf("@", charIndex(line, course,0)),line.lastIndexOf("@"));
+                    i++;
+                }
+                pw.println(line);
+                pw.flush();
+            }
+            pw.close();
+            br.close();
+            // Delete the original file
+            if (!originalFile.delete()) {
+                System.out.println("Could not delete file");
+                return;
+            }
+            // Rename the new file to the filename the original file had.
+            if (!tempFile.renameTo(originalFile))
+                System.out.println("Could not rename file");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     //Misc Methods ------------------------------------------------------------------------------------------------------
-    public static int charIndex(String result, String charfind, int position){
+    private static int charIndex(String result, String charfind, int position){
         int index = -1;
 
         for(int i = -1; i < position; i++){
             index = result.indexOf(charfind, index+1);
-            //System.out.println("Index: " + index);
         }
         return index;
     }
@@ -452,9 +388,9 @@ public class Database {
         }
         return amountOfGrades-2;
     }
-    public static int favEducations(String userID){
+    public static int countFavEducations(String userID){
 
-        int amountOfGrades = 0;
+        int amountOfFavEdu = 0;
 
         try {
             Scanner scanner = new Scanner(new File("src/dBase.txt"));
@@ -467,7 +403,7 @@ public class Database {
 
                     for (int i = 0; i < result.length(); i++) {
                         if (result.charAt(i) == '@') {
-                            amountOfGrades++;
+                            amountOfFavEdu++;
                         }
                     }
                 }
@@ -476,6 +412,6 @@ public class Database {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        return amountOfGrades-2;
+        return amountOfFavEdu-2;
     }
 }
