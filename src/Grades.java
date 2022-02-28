@@ -40,9 +40,6 @@ class Grade {
         this.lettergrade=lg;
         this.kurspoäng=kp;
     }
-
-
-
 }
 
 

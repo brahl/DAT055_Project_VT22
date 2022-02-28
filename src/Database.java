@@ -82,8 +82,6 @@ public class Database {
         }
         return gs;
     }
-
-
     public FavEducations readDatabaseFavCourses(String userID){
         try (Scanner scanner = new Scanner(new File("src/dBase.txt"));){
             //Scanner scanner = new Scanner(new File("src/dBase.txt"));
@@ -149,7 +147,7 @@ public class Database {
         return finalResult;
     }
 
-    //update and add model methods ------------------------------------------------------------------------------------------------------
+    //update, add and remove model methods ------------------------------------------------------------------------------------------------------
     public static void dBaseUpdater(String updateType, String userID, String updateData){
         File originalFile = new File("src/dBase.txt");
         File tempFile = new File("tempfile.txt");
@@ -311,7 +309,6 @@ public class Database {
             e.printStackTrace();
         }
     }
-
     public static void removeGrade(String userID, String course){
         File originalFile = new File("src/dBase.txt");
         File tempFile = new File("tempfile.txt");

@@ -3,7 +3,7 @@ email Rafstedt@gmail.com
 fName Fredrik
 lName Reinfeldt
 password reinfeldt123
-grades @Svenska1:20:A@Svenska 3:20:A@Engelska 7:20:B@Datateknik:100:F@Vinkunskap:100:A@Algebra:100:A@Nu lägger vi till en loginpage:100:A@hej:100:B@Hej:100:C@Hej:100:C@Kurs:100:A@abc:2+0:A@Hejsan:20:A@Hejsan2:20:B@Hejsan 3:20:A@hejsan 4:20:A@hejsan9:20:A@Hesajn100:10000000:A@
+grades @Svenska1:20:A@Svenska 3:20:A@Engelska 7:20:B@Datateknik:100:F@Vinkunskap:100:A@Algebra:100:A@Nu lägger vi till en loginpage:100:A@hej:100:B@Hej:100:C@
 fEdus @Programnamn:skola:courseCredits:antagningspoängår-5:apår-4:apår-3:apår-2:apår-1:apår0@Datateknik:Chalmers:180hp:18.23:17.23:17.23:17.23:15.55@
 
 002

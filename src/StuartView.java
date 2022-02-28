@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.DecimalFormat;
 
 //Fixa felhantering som wrong entry, just nu låser programmet sig om man exempelvis skriver text i kurspoäng.
 
@@ -35,6 +36,8 @@ public class StuartView extends JFrame{
     JFrame frame = new JFrame("STU.ART");
     Grades grades = new Grades();
     Database db = new Database();
+
+    private static final DecimalFormat df = new DecimalFormat("0.00");
 
     public StuartView(String user){
 
@@ -71,8 +74,8 @@ public class StuartView extends JFrame{
                     courselistitem = g.kurs + " " + g.kurspoäng + " "+ g.lettergrade;
                     listModel.addElement(courselistitem);
                 }
-                meritLabel.setText("Merit: "+ grades.printGPA());
-                meritProfilLabel.setText("Merit: "+ grades.printGPA());
+                meritLabel.setText("Merit: "+ df.format(grades.printGPA()));
+                meritProfilLabel.setText("Merit: "+ df.format(grades.printGPA()));
             }
 
         });
@@ -101,7 +104,7 @@ public class StuartView extends JFrame{
         nameLabel.setText(Database.readFirstName(user)+" "+Database.readLastName(user));
         emailLabel.setText(Database.readEmail(user));
         passwordProfilLabel.setText(Database.readPassword(user));
-        meritProfilLabel.setText(Double.toString(grades.printGPA()));
+        meritProfilLabel.setText((df.format(grades.printGPA())));
     }
 
     /**
@@ -112,7 +115,7 @@ public class StuartView extends JFrame{
         listModel = new DefaultListModel<>();
         listCourses.setModel(listModel);
         initCourseLabel(user,db);
-        meritLabel.setText("Merit: "+ grades.printGPA());
+        meritLabel.setText("Merit: "+ df.format(grades.printGPA()));
     }
 
     /**
