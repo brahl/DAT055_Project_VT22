@@ -1,5 +1,3 @@
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -10,37 +8,12 @@ import java.io.FileReader;
 import java.io.PrintWriter;
 
 public class Database {
-    String name;
-    String credits;
-    String grade;
-    String university;
-    String admissionPoints;
+    Grades gs = new Grades();
+    Grade g = new Grade();
+    FavEducations fes = new FavEducations();
+    FavEducation fe = new FavEducation();
 
     public Database(){}
-
-    //Random Constructors that won't be needed
-    public Database(String courseName, String courseCredits, String courseGrade){
-        String name = courseName;
-        String credits = courseCredits;
-        String grade = courseGrade;
-    }
-    public Database(String programName, String programUniversity, String programCredits, String programAdmissionPoints2017, String programAdmissionPoints2018, String programAdmissionPoints2019, String programAdmissionPoints2020, String programAdmissionPoints2021){
-        String name = programName;
-        String university = programUniversity;
-        String credits = programCredits;
-        String admissionPoints5 = programAdmissionPoints2017;
-        String admissionPoints4 = programAdmissionPoints2018;
-        String admissionPoints3 = programAdmissionPoints2019;
-        String admissionPoints2 = programAdmissionPoints2020;
-        String admissionPoints1 = programAdmissionPoints2021;
-    }
-
-
-
-
-
-
-
 
     //reader methods ------------------------------------------------------------------------------------------------------
     public static String readEmail(String userID){
@@ -55,7 +28,7 @@ public class Database {
     public static String readPassword(String userID){
         return readDatabase("password", userID);
     }
-    public static void readGrades(String userID){
+    /* public static void readGrades(String userID){
        String user = userID;
        System.out.println(user + "'s courses:");
        for(int i = 0; i < 10; i++){
@@ -65,13 +38,15 @@ public class Database {
             //   break;
            //}
 
-           System.out.println("  CourseName: " + readDatabaseGrades(user)[i][0]);
-           System.out.println("        Credits: " + readDatabaseGrades(user)[i][1]);
-           System.out.println("        Grade: " + readDatabaseGrades(user)[i][2]);
+          // System.out.println("  CourseName: " + readDatabaseGrades(user)[i][0]);
+          // System.out.println("        Credits: " + readDatabaseGrades(user)[i][1]);
+          // System.out.println("        Grade: " + readDatabaseGrades(user)[i][2]);
 
        }
    }
-    public static void readTargetEducation(String userID){
+
+    */
+    /*public static void readTargetEducation(String userID){
        String user = userID;
        System.out.println(user + "'s target education:");
        for(int i = 0; i < 20; i++){
@@ -91,7 +66,7 @@ public class Database {
            System.out.println("        AdmissionPoints 2021: " + readDatabaseFavCourses(user)[i][7]);
 
        }
-   }
+   }*/
 
     //Update caller methods ------------------------------------------------------------------------------------------------------
     public static void updateEmail(String userID, String email){
@@ -112,15 +87,7 @@ public class Database {
     }
 
     //reader model methods ------------------------------------------------------------------------------------------------------
-    public static String[][] readDatabaseGrades(String userID){
-        String[][] finalResult = new String[50][3];
-        ArrayList<Database> grades = new ArrayList<>();
-
-
-        String tName = "";
-        String tCredits = "";
-        String tGrade = "";
-
+    public Grades readDatabaseGrades(String userID){
         try {
             Scanner scanner = new Scanner(new File("src/dBase.txt"));
             while (scanner.hasNextLine()) {
@@ -135,40 +102,25 @@ public class Database {
                             amountOfGrades++;
                         }
                     }
-                    //System.out.println(amountOfGrades);
-                    //System.out.println(result);
                     int i = 0;
                     int j = 0;
                     while(i <= amountOfGrades-2){
-                        tName = result.substring(charIndex(result, "@", i)+1, charIndex(result, ":", j));
-                        tCredits = result.substring(charIndex(result, ":", j)+1, charIndex(result, ":", j+1));
-                        tGrade = result.substring(charIndex(result, ":", j+1)+1, charIndex(result, "@", i+1));
-                        finalResult[i][0] = tName;
-                        finalResult[i][1] = tCredits;
-                        finalResult[i][2] = tGrade;
+                        g.kurs = result.substring(charIndex(result, "@", i)+1, charIndex(result, ":", j));
+                        g.kurspoäng = result.substring(charIndex(result, ":", j)+1, charIndex(result, ":", j+1));
+                        g.lettergrade = result.substring(charIndex(result, ":", j+1)+1, charIndex(result, "@", i+1));
+                        gs.addGrade(g);
                         i++;
                         j = j+2;
-
                     }
-
-
-
                 }
             }
             scanner.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        return finalResult;
+        return gs;
     }
-    public static String[][] readDatabaseFavCourses(String userID){
-        String[][] finalResult = new String[20][8];
-
-        String tPName = "";
-        String tUniName = "";
-        String tCredits = "";
-        String tAdmission2017, tAdmission2018, tAdmission2019, tAdmission2020, tAdmission2021 = "";
-
+    public FavEducations readDatabaseFavCourses(String userID){
         try {
             Scanner scanner = new Scanner(new File("src/dBase.txt"));
             while (scanner.hasNextLine()) {
@@ -177,58 +129,39 @@ public class Database {
                         scanner.nextLine();;
                     }
                     String result = scanner.nextLine();
-                    //System.out.println(result);
                     int amountOfGrades = 0;
                     for (int i = 0; i < result.length(); i++) {
                         if (result.charAt(i) == '@') {
                             amountOfGrades++;
                         }
                     }
-                    //System.out.println(amountOfGrades);
-                    //System.out.println(result);
                     int i = 0;
                     int j = 0;
                     while(i <= amountOfGrades-2){
-                        tPName = result.substring(charIndex(result, "@", i)+1, charIndex(result, ":", j));
-                        //System.out.println(tPName);
-                        tUniName = result.substring(charIndex(result, ":", j)+1, charIndex(result, ":", j+1));
-                        //System.out.println(tUniName);
-                        tCredits = result.substring(charIndex(result, ":", j+1)+1, charIndex(result, ":", j+2));
-                        //System.out.println(tCredits);
-                        tAdmission2017 = result.substring(charIndex(result, ":", j+2)+1, charIndex(result, ":", j+3));
-                        tAdmission2018 = result.substring(charIndex(result, ":", j+3)+1, charIndex(result, ":", j+4));
-                        tAdmission2019 = result.substring(charIndex(result, ":", j+4)+1, charIndex(result, ":", j+5));
-                        tAdmission2020 = result.substring(charIndex(result, ":", j+5)+1, charIndex(result, ":", j+6));
-                        tAdmission2021 = result.substring(charIndex(result, ":", j+6)+1, charIndex(result, "@", i+1));
-                        //System.out.println(tAdmission);
-                        finalResult[i][0]= tPName;
-                        finalResult[i][1]= tUniName;
-                        finalResult[i][2] = tCredits;
-                        finalResult[i][3] = tAdmission2017;
-                        finalResult[i][4] = tAdmission2018;
-                        finalResult[i][5] = tAdmission2019;
-                        finalResult[i][6] = tAdmission2020;
-                        finalResult[i][7]= tAdmission2021;
-
-
-                        //System.out.println("I Got here");
-
+                        fe.pName = result.substring(charIndex(result, "@", i)+1, charIndex(result, ":", j));
+                        fe.uni = result.substring(charIndex(result, ":", j)+1, charIndex(result, ":", j+1));
+                        fe.credits = result.substring(charIndex(result, ":", j+1)+1, charIndex(result, ":", j+2));
+                        fe.admissionM5 = result.substring(charIndex(result, ":", j+2)+1, charIndex(result, ":", j+3));
+                        fe.admissionM4 = result.substring(charIndex(result, ":", j+3)+1, charIndex(result, ":", j+4));
+                        fe.admissionM3 = result.substring(charIndex(result, ":", j+4)+1, charIndex(result, ":", j+5));
+                        fe.admissionM2 = result.substring(charIndex(result, ":", j+5)+1, charIndex(result, ":", j+6));
+                        fe.admissionM1 = result.substring(charIndex(result, ":", j+6)+1, charIndex(result, "@", i+1));
+                        fes.addFavEducations(fe);
                         i++;
                         j = j+8;
-
                     }
-
-
-
                 }
             }
             scanner.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        return finalResult;
+        return fes;
     }
     public static String readDatabase(String readType, String userID){
+        if(readType != "email" || readType != "fName" || readType != "lName" || readType != "password"){
+            //throw new Exception("there is no readtype named specified as:" + readType);
+        }
         String finalResult = "";
         int index = 0;
 
@@ -481,8 +414,6 @@ public class Database {
 
     }
 
-
-
     //Misc Methods ------------------------------------------------------------------------------------------------------
     public static int charIndex(String result, String charfind, int position){
         int index = -1;
@@ -493,9 +424,6 @@ public class Database {
         }
         return index;
     }
-
-
-
     public static int countGrades(String userID){
 
         int amountOfGrades = 0;
@@ -522,7 +450,6 @@ public class Database {
         }
         return amountOfGrades-2;
     }
-
     public static int favEducations(String userID){
 
         int amountOfGrades = 0;
