@@ -18,9 +18,10 @@ public class ProfilView{
     public ProfilView() throws IOException {
 
         //Server server = new Server();
+
         nameLabel.setText(Database.readFirstName(user)+" "+Database.readLastName(user));
         emailLabel.setText(Database.readEmail(user));
-        //passwLabel.setText(Database.readPassw());
+        passwLabel.setText(Database.readPassword(user));
         //meritLabel.setText(Database.readMerit());
 
 
@@ -40,8 +41,8 @@ public class ProfilView{
             @Override
             public void actionPerformed(ActionEvent e) {
                 String newPassw = JOptionPane.showInputDialog("Enter new password");
-                //Database.updatePassw(newPassw);
-                //passwLabel.setText(server.readPassw());
+                Database.updatePassword(newPassw, user);
+                passwLabel.setText(Database.readPassword(user));
 
             }
         });
@@ -50,7 +51,6 @@ public class ProfilView{
 
     public Component show() {
         profilePanel.setBackground(Color.WHITE);
-
 
 
         return profilePanel;
