@@ -109,6 +109,7 @@ public class Database {
                         g.kurspoäng = result.substring(charIndex(result, ":", j)+1, charIndex(result, ":", j+1));
                         g.lettergrade = result.substring(charIndex(result, ":", j+1)+1, charIndex(result, "@", i+1));
                         gs.addGrade(g);
+                        System.out.println(gs);
                         i++;
                         j = j+2;
                     }
@@ -120,6 +121,8 @@ public class Database {
         }
         return gs;
     }
+
+
     public FavEducations readDatabaseFavCourses(String userID){
         try {
             Scanner scanner = new Scanner(new File("src/dBase.txt"));
