@@ -1,6 +1,7 @@
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.xml.crypto.Data;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -48,11 +49,16 @@ public class StuartView extends JFrame{
 
     public StuartView(String user){
         Database db = new Database();
-        initMinaBetygView(user);
+        initMinaBetygView(user,db);
         initProfilView(user);
 
         frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
-        frame.setSize(600,600);
+
+
+        frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        frame.setUndecorated(false);
+        frame.setVisible(true);
+
         ImageIcon image = new ImageIcon("Stuart.png");
         frame.setIconImage(image.getImage());
         frame.getContentPane().setBackground(new Color(0xFFFFFFF));
@@ -134,10 +140,10 @@ public class StuartView extends JFrame{
      * Sets initial courselist and merit
      * @param user target user
      */
-    private void initMinaBetygView(String user) {
+    private void initMinaBetygView(String user, Database db) {
         listModel = new DefaultListModel<String>();
         listCourses.setModel(listModel);
-        initCourseLabel(user);
+        initCourseLabel(user,db);
         meritLabel.setText("Merit: "+ grades.printGPA());
     }
 
@@ -145,12 +151,13 @@ public class StuartView extends JFrame{
      * Reads grades for user in database, adds to listmodel.
      * @param user target user
      */
-    public void initCourseLabel(String user) {
+    public void initCourseLabel(String user, Database db) {
         listModel.removeAllElements();
+        Grades gs = db.readDatabaseGrades(user);
 
-        for(int i = 0; i<Database.countGrades(user)+1;i++){
-            grades.addGrade(new Grade(Database.readDatabaseGrades(user)[i][0], Database.readDatabaseGrades(user)[i][2], Database.readDatabaseGrades(user)[i][1]));
-            courselistitem = Database.readDatabaseGrades(user)[i][0]+" "+Database.readDatabaseGrades(user)[i][1]+ " "+ Database.readDatabaseGrades(user)[i][2];
+        for(Grade g : gs){
+            grades.addGrade(new Grade(g.kurs, g.kurspoäng, g.lettergrade));
+            courselistitem = g.kurs+" "+g.kurspoäng+ " "+ g.lettergrade;
             listModel.addElement(courselistitem);
 
         }
