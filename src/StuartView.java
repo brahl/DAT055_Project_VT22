@@ -32,11 +32,7 @@ public class StuartView extends JFrame{
     private JPanel StuartPanel;
     private String courselistitem;
 
-
-
-
     JFrame frame = new JFrame("STU.ART");
-
 
     Grades grades = new Grades();
 
