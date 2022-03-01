@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.text.DecimalFormat;
 
 //Fixa felhantering som wrong entry, just nu låser programmet sig om man exempelvis skriver text i kurspoäng.
@@ -35,6 +36,7 @@ public class StuartView extends JFrame{
     private JTextField searchField;
     private JButton searchStat;
     private JComboBox urvalsAlt;
+    private SearchAntagning searchRes;
 
     private DefaultListModel<String> listFavEdModel;
     private JList<String> listFavEducation;
@@ -42,6 +44,7 @@ public class StuartView extends JFrame{
     private JList listAntagning;
     private JLabel meritLabelAntLabel;
     private String courselistitem;
+
 
     JFrame frame = new JFrame("STU.ART");
     Grades grades = new Grades();
@@ -116,22 +119,42 @@ public class StuartView extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 String search = searchField.getText();
-                if(search.equals("Datateknik Chalmers")){
-
+                try {
+                    SearchAntagning searchRes = new SearchAntagning(search);
+                    updateSearchResults(searchRes);
+                } catch (IOException ex) {
+                    ex.printStackTrace();
                 }
+
+
+            }
+            private void updateSearchResults(SearchAntagning searchRes) {
+                listAntagningModel.removeAllElements();
+                listAntagningModel.addElement(searchRes.b1.fe.admissionM1);
+                listAntagningModel.addElement(searchRes.b1.fe.admissionM2);
+                listAntagningModel.addElement(searchRes.b1.fe.admissionM3);
+                listAntagningModel.addElement(searchRes.b1.fe.admissionM4);
+                listAntagningModel.addElement(searchRes.b1.fe.admissionM5);
+                listFavEdModel.removeAllElements();
+                listFavEdModel.addElement(searchRes.b1.fe.uni);
+                listFavEdModel.addElement(searchRes.b1.fe.pName);
+                listFavEdModel.addElement(searchRes.b1.fe.credits);
+
 
             }
         });
+
     }
+
+
 
     private void initAntagningsView(String user) {
         listFavEdModel = new DefaultListModel<>();
         listFavEducation.setModel(listFavEdModel);
         listAntagningModel = new DefaultListModel<>();
         listAntagning.setModel(listAntagningModel);
+
         meritLabelAntLabel.setText("Merit: "+df.format(grades.printGPA()));
-
-
 
     }
 
