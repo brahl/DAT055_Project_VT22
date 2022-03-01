@@ -48,7 +48,6 @@ public class LogInPortal extends JFrame implements ActionListener {
 
     public void addComponentsToWindow(){
         container.add(welcomeLabel);
-        System.out.println("HEj");
         container.add(userLabel);
         container.add(passwordLabel);
         container.add(userTextField);

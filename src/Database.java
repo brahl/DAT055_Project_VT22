@@ -234,6 +234,13 @@ public class Database {
         }
     }
     public static void addGrade(String userID, String course, String credits, String grade){
+        if(course.contains("@") || course.contains(":") ||
+           credits.contains("@") || credits.contains(":") ||
+           grade.contains("@") || grade.contains(":")){
+            JPanel panel = new JPanel();
+            JOptionPane.showMessageDialog(panel, "@ and : are forbidden characters", "Warning", JOptionPane.WARNING_MESSAGE);
+            throw new ArithmeticException("Coursename already exists");
+        }
         File originalFile = new File("src/dBase.txt");
         File tempFile = new File("tempfile.txt");
 
@@ -278,6 +285,19 @@ public class Database {
         }
     }
     public static void addTargetEducation(String userID, String programName, String university, String programCredits, String admission2017, String admission2018, String admission2019, String admission2020, String admission2021){
+        if(programName.contains("@") || programName.contains(":") ||
+           university.contains("@") || university.contains(":") ||
+           programCredits.contains("@") || programCredits.contains(":") ||
+           admission2017.contains("@") || admission2017.contains(":") ||
+           admission2018.contains("@") || admission2018.contains(":") ||
+           admission2019.contains("@") || admission2019.contains(":") ||
+           admission2020.contains("@") || admission2020.contains(":") ||
+           admission2021.contains("@") || admission2021.contains(":")){
+            JPanel panel = new JPanel();
+            JOptionPane.showMessageDialog(panel, "@ and : are forbidden characters", "Warning", JOptionPane.WARNING_MESSAGE);
+            throw new ArithmeticException("Coursename already exists");
+        }
+
         File originalFile = new File("src/dBase.txt");
         File tempFile = new File("tempfile.txt");
         try (BufferedReader br = new BufferedReader(new FileReader(originalFile));
