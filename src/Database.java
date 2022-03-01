@@ -145,9 +145,7 @@ public class Database {
         }
         return finalResult;
     }
-    /**
-     * TODO Issues, not updating email and password @Viktor
-     */
+
     //update, add and remove model methods ------------------------------------------------------------------------------------------------------
     public static void dBaseUpdater(String updateType, String userID, String updateData){
         if(updateData.equals("")){
@@ -361,13 +359,12 @@ public class Database {
     }
 
     //Login
-    public String userExists(String email){
-        int highestID = 0;
+    public static String userExists(String email){
         String userID = "";
         try (Scanner scanner = new Scanner(new File("src/dBase.txt"));){
             while (scanner.hasNextLine()) {
                 String store = scanner.nextLine();
-                if(scanner.nextLine().contains(email)) {
+                if(scanner.hasNextLine() && scanner.nextLine().contains(email)) {
                     userID = store;
                 }
             }
@@ -381,14 +378,14 @@ public class Database {
         }
         return userID;
     }
-
-    public boolean passwordMatch(String email, String password){
+    public static boolean passwordMatch(String email, String password){
         try (Scanner scanner = new Scanner(new File("src/dBase.txt"));){
             while (scanner.hasNextLine()) {
                 if(scanner.nextLine().contains(email)) {
                     scanner.nextLine();
                     scanner.nextLine();
-                    if(scanner.nextLine().equals(password)){
+
+                    if(scanner.nextLine().contains(password)){
                         return true;
                     }
                 }
