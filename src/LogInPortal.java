@@ -81,8 +81,48 @@ public class LogInPortal extends JFrame implements ActionListener {
 
 
         if (e.getSource() == createAccountButton) {
-            System.out.println("HEJ");
-            container.setVisible(false);
+            JFrame frame2 = new JFrame("Create Account");
+            frame2.setVisible(true);
+            frame2.setSize(400,130);
+            frame2.setLocation(600,350);
+
+            JPanel panel = new JPanel();
+            JPanel panel2 = new JPanel();
+            JPanel panel3 = new JPanel();
+            frame2.setLayout(new FlowLayout());
+            panel.setLayout(new GridLayout(4,1));
+            JTextField email = new JTextField();
+            JLabel emailL = new JLabel("Enter email:");
+            JTextField firstName = new JTextField();
+            JLabel firstNameL = new JLabel("Enter first name:");
+            JTextField lastName = new JTextField();
+            JLabel lastNameL = new JLabel("Enter last name");
+            JTextField password = new JTextField();
+            JLabel passwordL = new JLabel("Enter password");
+            JButton caButton = new JButton("CREATE ACCOUNT");
+            panel.add(emailL);
+            panel.add(email);
+            panel.add(firstNameL);
+            panel.add(firstName);
+            panel.add(lastNameL);
+            panel.add(lastName);
+            panel.add(passwordL);
+            panel.add(password);
+            panel2.add(caButton);
+            panel.setVisible(true);
+
+            frame2.add(panel);
+            frame2.add(panel2);
+            frame2.setDefaultCloseOperation(EXIT_ON_CLOSE);
+
+            caButton.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    Database.addUser(email.getText(), firstName.getText(), lastName.getText(), password.getText());
+                    JOptionPane.showMessageDialog(null, "Account has been created");
+                }
+            });
+
+
 
         }
 
@@ -126,15 +166,12 @@ public class LogInPortal extends JFrame implements ActionListener {
                new StuartView(user);
                return true;
              }
-
         }
         else{
             JLabel logIn = new JLabel("No user with that email exists, create an account");
             logIn.setBounds(10,10,500,600);
             //container1.add(logIn);   
         }
-
-
         return false;
     }
 

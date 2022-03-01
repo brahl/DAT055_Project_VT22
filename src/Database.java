@@ -192,7 +192,7 @@ public class Database {
             e.printStackTrace();
         }
     }
-    public void addUser(String email, String fName, String lName){
+    public static void addUser(String email, String fName, String lName, String password){
         File originalFile = new File("src/dBase.txt");
         File tempFile = new File("tempfile.txt");
         try ( BufferedReader br = new BufferedReader(new FileReader(originalFile));
@@ -201,19 +201,22 @@ public class Database {
             String line = null;
             int i = 0;
             while ((line = br.readLine()) != null) {
-                if(line.contains(Integer.toString(highestUserID()+1))){
+                if(line.contains(highestUserID())){
                     throw new ArithmeticException("UserID already exists");
                 }
-                if(line.contains(email) && email.length() == line.length()){
+                if(line.contains(email) && email.length() == line.length()-6){
                     throw new ArithmeticException("Email already exists");
                 }
                 pw.println(line);
                 pw.flush();
             }
-            pw.println(Integer.toString(highestUserID()+1));
+            pw.println(highestUserID());
             pw.println("email" + " " + email);
             pw.println("fName" + " " + fName);
             pw.println("lName" + " " + lName);
+            pw.println("password" + " " + password);
+            pw.println("grades" + " " + "@");
+            pw.println("fEdus" + " " + "@");
             pw.print("\n");
             pw.close();
             br.close();
@@ -482,23 +485,33 @@ public class Database {
         }
         return amountOfFavEdu-2;
     }
-    public int highestUserID(){
+    public static String highestUserID(){
         int highestID = 0;
+        String highestIDString = "000";
         try (Scanner scanner = new Scanner(new File("src/dBase.txt"));){
         while (scanner.hasNextLine()) {
             String result = scanner.nextLine();
+
             if(result.length() == 3 && scanner.nextLine().contains("email")) {
                 if(Integer.parseInt(result) > highestID){
                     highestID = Integer.parseInt(result);
+                    if(result.contains("00") && !result.contains("9")){
+                        highestIDString = "00" + (highestID+1);
+                    }
+                    if(!result.contains("00") && result.contains("0") && !result.contains("99")){
+                        highestIDString = "0" + (highestID+1);
+                    }
+                    if(!result.contains("0")){
+                        highestIDString = Integer.toString(highestID+1);
+                    }
+
                 }
             }
         }
     } catch (FileNotFoundException e) {
         e.printStackTrace();
     }
-        return highestID;
+        return highestIDString;
     }
-
-
 }
 

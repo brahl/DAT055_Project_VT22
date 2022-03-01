@@ -14,7 +14,6 @@ public class App {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setResizable(false);
         new App();
-
         //uncomment for testing
         //new StuartView(user);
 
