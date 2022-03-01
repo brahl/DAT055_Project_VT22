@@ -30,6 +30,7 @@ public class Scraper {
     public FavEducation writeToTemp(String s) throws FileNotFoundException {
         String result;
         Scanner scanner = new Scanner(s);
+        System.out.println(s);
         while (scanner.hasNextLine()) {
             result = scanner.nextLine();
             if(result.contains("BI") && !result.contains("BII")) {

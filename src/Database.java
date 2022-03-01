@@ -84,7 +84,6 @@ public class Database {
     }
     public FavEducations readDatabaseFavCourses(String userID){
         try (Scanner scanner = new Scanner(new File("src/dBase.txt"));){
-            //Scanner scanner = new Scanner(new File("src/dBase.txt"));
             while (scanner.hasNextLine()) {
                 if(scanner.nextLine().equals(userID)) {
                     for(int i = 0; i < 5; i++){
@@ -149,6 +148,12 @@ public class Database {
 
     //update, add and remove model methods ------------------------------------------------------------------------------------------------------
     public static void dBaseUpdater(String updateType, String userID, String updateData){
+        if(updateData.equals("")){
+            JPanel panel = new JPanel();
+            JOptionPane.showMessageDialog(panel, "You can't update your " + updateType + " to nothing :(", "Warning", JOptionPane.WARNING_MESSAGE);
+            throw new ArithmeticException("updateData can't be null");
+        }
+
         File originalFile = new File("src/dBase.txt");
         File tempFile = new File("tempfile.txt");
         try (BufferedReader br = new BufferedReader(new FileReader(originalFile));
@@ -164,11 +169,12 @@ public class Database {
                     line = line.substring(0, line.lastIndexOf(" ")) + " " + updateData;
                     i++;
                 }
+                System.out.println(line);
                 pw.println(line);
                 pw.flush();
             }
-            //pw.close();
-            //br.close();
+            pw.close();
+            br.close();
 
             // Delete the original file
             if (!originalFile.delete()) {
@@ -186,7 +192,7 @@ public class Database {
             e.printStackTrace();
         }
     }
-    public static void addUser(String userID, String email, String fName, String lName){
+    public void addUser(String email, String fName, String lName){
         File originalFile = new File("src/dBase.txt");
         File tempFile = new File("tempfile.txt");
         try ( BufferedReader br = new BufferedReader(new FileReader(originalFile));
@@ -195,7 +201,7 @@ public class Database {
             String line = null;
             int i = 0;
             while ((line = br.readLine()) != null) {
-                if(line.contains(userID)){
+                if(line.contains(Integer.toString(highestUserID()+1))){
                     throw new ArithmeticException("UserID already exists");
                 }
                 if(line.contains(email) && email.length() == line.length()){
@@ -204,7 +210,7 @@ public class Database {
                 pw.println(line);
                 pw.flush();
             }
-            pw.println(userID);
+            pw.println(Integer.toString(highestUserID()+1));
             pw.println("email" + " " + email);
             pw.println("fName" + " " + fName);
             pw.println("lName" + " " + lName);
@@ -413,4 +419,22 @@ public class Database {
         }
         return amountOfFavEdu-2;
     }
+    public int highestUserID(){
+        int highestID = 0;
+        try (Scanner scanner = new Scanner(new File("src/dBase.txt"));){
+        while (scanner.hasNextLine()) {
+            String result = scanner.nextLine();
+            if(result.length() == 3 && scanner.nextLine().contains("email")) {
+                if(Integer.parseInt(result) > highestID){
+                    highestID = Integer.parseInt(result);
+                }
+            }
+        }
+    } catch (FileNotFoundException e) {
+        e.printStackTrace();
+    }
+        return highestID;
+    }
+
 }
+
