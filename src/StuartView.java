@@ -4,7 +4,13 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.text.DecimalFormat;
+
+import static java.nio.file.LinkOption.NOFOLLOW_LINKS;
+import static java.nio.file.StandardCopyOption.COPY_ATTRIBUTES;
+import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 
 //Fixa felhantering som wrong entry, just nu låser programmet sig om man exempelvis skriver text i kurspoäng.
 
@@ -45,6 +51,8 @@ public class StuartView extends JFrame{
     private JTable utbTable;
     private JTable antTable;
     private JLabel StatusLabel;
+    private JLabel ImageLabel;
+    private JButton ProfileButton;
 
     private String courselistitem;
 
@@ -60,6 +68,7 @@ public class StuartView extends JFrame{
 
         initMinaBetygView(user,db);
         initProfilView(user);
+        initProfilePic(user);
         initAntagningsView(user);
 
         frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -163,6 +172,21 @@ public class StuartView extends JFrame{
 
         });
 
+        ProfileButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    String newPic = JOptionPane.showInputDialog("Enter source path to your profile picture");
+                    Path bytes = Files.copy(new java.io.File(newPic).toPath(),
+                            new java.io.File("ProfilePictures/"+user+".jpg").toPath(),
+                            REPLACE_EXISTING,
+                            COPY_ATTRIBUTES,
+                            NOFOLLOW_LINKS);
+                } catch (IOException d) {
+                    d.printStackTrace();
+                }
+            }
+        });
     }
 
     private boolean searchValid(String query) {
@@ -228,6 +252,11 @@ public class StuartView extends JFrame{
 
         }
 
+    }
+
+    private void initProfilePic(String user) {
+        ImageIcon imageIcon = new ImageIcon(new ImageIcon("ProfilePictures/"+ user +".jpg").getImage().getScaledInstance(100, 100, Image.SCALE_DEFAULT));
+        ImageLabel.setIcon(imageIcon);
     }
 
 
