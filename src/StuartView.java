@@ -28,9 +28,19 @@ public class StuartView extends JFrame{
     private JLabel passwordProfilLabel;
     private JLabel emailLabel;
 
-    private DefaultListModel<String> listModel;
+    private DefaultListModel<String> listCourseModel;
     private JList<String> listCourses;
     private JPanel StuartPanel;
+    private JPanel AntagningsStat;
+    private JTextField searchField;
+    private JButton searchStat;
+    private JComboBox urvalsAlt;
+
+    private DefaultListModel<String> listFavEdModel;
+    private JList<String> listFavEducation;
+    private DefaultListModel<String> listAntagningModel;
+    private JList listAntagning;
+    private JLabel meritLabelAntLabel;
     private String courselistitem;
 
     JFrame frame = new JFrame("STU.ART");
@@ -44,6 +54,7 @@ public class StuartView extends JFrame{
 
         initMinaBetygView(user,db);
         initProfilView(user);
+        initAntagningsView(user);
 
         frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -69,10 +80,10 @@ public class StuartView extends JFrame{
                 updateCourseLabel();
             }
             private void updateCourseLabel() {
-                listModel.removeAllElements();
+                listCourseModel.removeAllElements();
                 for(Grade g : grades){
                     courselistitem = g.kurs + " " + g.kurspoäng + " "+ g.lettergrade;
-                    listModel.addElement(courselistitem);
+                    listCourseModel.addElement(courselistitem);
                 }
                 meritLabel.setText("Merit: "+ df.format(grades.printGPA()));
                 meritProfilLabel.setText("Merit: "+ df.format(grades.printGPA()));
@@ -101,6 +112,27 @@ public class StuartView extends JFrame{
                 emailLabel.setText(Database.readEmail(user));
             }
         });
+        searchStat.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String search = searchField.getText();
+                if(search.equals("Datateknik Chalmers")){
+
+                }
+
+            }
+        });
+    }
+
+    private void initAntagningsView(String user) {
+        listFavEdModel = new DefaultListModel<>();
+        listFavEducation.setModel(listFavEdModel);
+        listAntagningModel = new DefaultListModel<>();
+        listAntagning.setModel(listAntagningModel);
+        meritLabelAntLabel.setText("Merit: "+df.format(grades.printGPA()));
+
+
+
     }
 
     private void initProfilView(String user) {
@@ -115,8 +147,8 @@ public class StuartView extends JFrame{
      * @param user target user
      */
     private void initMinaBetygView(String user, Database db) {
-        listModel = new DefaultListModel<>();
-        listCourses.setModel(listModel);
+        listCourseModel = new DefaultListModel<>();
+        listCourses.setModel(listCourseModel);
         initCourseLabel(user,db);
         meritLabel.setText("Merit: "+ df.format(grades.printGPA()));
     }
@@ -126,14 +158,14 @@ public class StuartView extends JFrame{
      * @param user target user
      */
     public void initCourseLabel(String user, Database db) {
-        listModel.removeAllElements();
+        listCourseModel.removeAllElements();
         Grades gs = db.readDatabaseGrades(user);
 
         for(Grade g : gs){
             System.out.println(g.kurs);
             grades.addGrade(new Grade(g.kurs, g.kurspoäng, g.lettergrade));
             courselistitem = g.kurs+" "+g.kurspoäng+ " "+ g.lettergrade;
-            listModel.addElement(courselistitem);
+            listCourseModel.addElement(courselistitem);
 
         }
 
