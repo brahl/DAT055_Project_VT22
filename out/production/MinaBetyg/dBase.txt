@@ -11,7 +11,7 @@ email johbirger@gmail.com
 fName Johan
 lName Birgersson
 password q
-grades @Svenska1:20:B@Svenska 2:20:B@Svenska 3:20:B@Bäst:100:A@
+grades @Svenska1:20:B@Svenska 2:20:B@Svenska 3:20:B@Bäst:100:A@Sämst:(:20:A@
 fEdus @Programnamn:skola:courseCredits:antagningspoängår-5:apår-4:apår-3:apår-2:apår-1:apår0@Datateknik:Chalmers:180hp:18.23:17.23:17.23:17.23:15.55@
 
 003

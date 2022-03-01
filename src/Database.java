@@ -284,15 +284,15 @@ public class Database {
             e.printStackTrace();
         }
     }
-    public static void addTargetEducation(String userID, String programName, String university, String programCredits, String admission2017, String admission2018, String admission2019, String admission2020, String admission2021){
+    public static void addTargetEducation(String userID, String programName, String university, String programCredits, String admissionM5, String admissionM4, String admissionM3, String admissionM2, String admissionM1){
         if(programName.contains("@") || programName.contains(":") ||
            university.contains("@") || university.contains(":") ||
            programCredits.contains("@") || programCredits.contains(":") ||
-           admission2017.contains("@") || admission2017.contains(":") ||
-           admission2018.contains("@") || admission2018.contains(":") ||
-           admission2019.contains("@") || admission2019.contains(":") ||
-           admission2020.contains("@") || admission2020.contains(":") ||
-           admission2021.contains("@") || admission2021.contains(":")){
+           admissionM5.contains("@") || admissionM5.contains(":") ||
+           admissionM4.contains("@") || admissionM4.contains(":") ||
+           admissionM3.contains("@") || admissionM3.contains(":") ||
+           admissionM2.contains("@") || admissionM2.contains(":") ||
+           admissionM1.contains("@") || admissionM1.contains(":")){
             JPanel panel = new JPanel();
             JOptionPane.showMessageDialog(panel, "@ and : are forbidden characters", "Warning", JOptionPane.WARNING_MESSAGE);
             throw new ArithmeticException("Coursename already exists");
@@ -310,7 +310,7 @@ public class Database {
                     i++;
                 }
                 if (line.contains("fEdus") && i == 1) {
-                    line = line.substring(0, line.lastIndexOf("@"))+ "@" + programName + ":" + university + ":" + programCredits + ":" + admission2017 + ":" + admission2018 + ":" + admission2019 + ":" + admission2020 + ":" + admission2021 + "@";
+                    line = line.substring(0, line.lastIndexOf("@"))+ "@" + programName + ":" + university + ":" + programCredits + ":" + admissionM5 + ":" + admissionM4 + ":" + admissionM3 + ":" + admissionM2 + ":" + admissionM1 + "@";
                     i++;
                 }
                 pw.println(line);
