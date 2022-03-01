@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
 
 public class LogInPortal extends JFrame implements ActionListener {
 
@@ -17,6 +18,7 @@ public class LogInPortal extends JFrame implements ActionListener {
     JTextField userTextField = new JTextField();
     //String username = userTextField.getText();
     //char[] password = passwordField.getPassword();
+    String user;
 
     LogInPortal()
     {
@@ -86,18 +88,24 @@ public class LogInPortal extends JFrame implements ActionListener {
         }
 
         if (e.getSource() == loginButton) {
-            container.setVisible(false);
+            container.setVisible(true);
 
             Container container1 = new Container();
             container1.setLayout(null);
             container1.setVisible(true);
 
-            JLabel logIn = new JLabel("Successful login!");
-            logIn.setBounds(10,10,500,600);
-            container1.add(logIn);
+            boolean success = tryLogin(userTextField.getText(),passwordField.getText());
+            if(success){
+                JLabel logIn = new JLabel("Successful login!");
+                logIn.setBounds(10,10,500,600);
+                container1.add(logIn);
+                //super.wait(1000);
+                //this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
 
-            logIn.setBackground(Color.black);
-
+            }
+            else{
+                JOptionPane.showMessageDialog(this, "Wrong password!");
+            }
 
         }
 
@@ -109,6 +117,29 @@ public class LogInPortal extends JFrame implements ActionListener {
             }
         }
     }
+
+    private boolean tryLogin(String userTextField, String passwordField) {
+         //returns a string or throw message
+        user = Database.userExists(userTextField);
+        if(!user.equals("")){
+             boolean match = Database.passwordMatch(userTextField.toString(),passwordField.toString());
+             if(match){
+               new StuartView(user);
+               return true;
+             }
+
+        }
+        else{
+            JLabel logIn = new JLabel("No user with that email exists, create an account");
+            logIn.setBounds(10,10,500,600);
+            //container1.add(logIn);   
+        }
+
+
+        return false;
+    }
+
+
 }
 
 
