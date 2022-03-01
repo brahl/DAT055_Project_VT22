@@ -18,6 +18,7 @@ public class LogInPortal extends JFrame implements ActionListener {
     JTextField userTextField = new JTextField();
     //String username = userTextField.getText();
     //char[] password = passwordField.getPassword();
+    String user;
 
     LogInPortal()
     {
@@ -87,26 +88,24 @@ public class LogInPortal extends JFrame implements ActionListener {
         }
 
         if (e.getSource() == loginButton) {
-            container.setVisible(false);
+            container.setVisible(true);
 
             Container container1 = new Container();
             container1.setLayout(null);
             container1.setVisible(true);
-            Boolean success = true;// = tryLogin(userTextField,passwordField);
-            if(success){
 
+            boolean success = tryLogin(userTextField.getText(),passwordField.getText());
+            if(success){
                 JLabel logIn = new JLabel("Successful login!");
                 logIn.setBounds(10,10,500,600);
                 container1.add(logIn);
                 //super.wait(1000);
-                this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
+                //this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
 
             }
             else{
-                JOptionPane.showMessageDialog(this,"Error");
+                JOptionPane.showMessageDialog(this, "Wrong password!");
             }
-
-
 
         }
 
@@ -118,15 +117,28 @@ public class LogInPortal extends JFrame implements ActionListener {
             }
         }
     }
-/*
-    private boolean tryLogin(JTextField userTextField, JPasswordField passwordField) {
-        user = Database.userExists(); //returns a string or throw message
-        boolean match = Database.passwordMatch(gmail,password);
-        if(match){
-            new StuartView(user);        }
-        return match;
+
+    private boolean tryLogin(String userTextField, String passwordField) {
+         //returns a string or throw message
+        user = Database.userExists(userTextField);
+        if(!user.equals("")){
+             boolean match = Database.passwordMatch(userTextField.toString(),passwordField.toString());
+             if(match){
+               new StuartView(user);
+               return true;
+             }
+
+        }
+        else{
+            JLabel logIn = new JLabel("No user with that email exists, create an account");
+            logIn.setBounds(10,10,500,600);
+            //container1.add(logIn);   
+        }
+
+
+        return false;
     }
-   */
+
 
 }
 

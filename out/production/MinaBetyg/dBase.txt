@@ -7,11 +7,11 @@ grades @Svenska 4:20:B@Svenska1:20:B@Svenska 2:20:B@Svenska 3:20:B@Engelska 3:20
 fEdus @Programnamn:skola:courseCredits:antagningspoängår-5:apår-4:apår-3:apår-2:apår-1:apår0@Datateknik:Chalmers:180hp:18.23:17.23:17.23:17.23:15.55@
 
 002
-email johan.birgersson@gmail.com
+email johbirger@gmail.com
 fName Johan
 lName Birgersson
-password qwerty
-grades @kursnamn:courseCredits:betyg@Svenska1:20:B@Svenska 2:20:B@Svenska 3:20:B@
+password q
+grades @Svenska1:20:B@Svenska 2:20:B@Svenska 3:20:B@Bäst:100:A@
 fEdus @Programnamn:skola:courseCredits:antagningspoängår-5:apår-4:apår-3:apår-2:apår-1:apår0@Datateknik:Chalmers:180hp:18.23:17.23:17.23:17.23:15.55@
 
 003

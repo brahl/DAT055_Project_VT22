@@ -8,6 +8,6 @@ public class Login {
         frame.setBounds(10, 10, 500, 600);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setResizable(false);
-        System.out.println("HEj");
+
     }
 }
