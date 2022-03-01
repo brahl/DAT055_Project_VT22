@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
 
 public class LogInPortal extends JFrame implements ActionListener {
 
@@ -91,12 +92,20 @@ public class LogInPortal extends JFrame implements ActionListener {
             Container container1 = new Container();
             container1.setLayout(null);
             container1.setVisible(true);
+            Boolean success = true;// = tryLogin(userTextField,passwordField);
+            if(success){
 
-            JLabel logIn = new JLabel("Successful login!");
-            logIn.setBounds(10,10,500,600);
-            container1.add(logIn);
+                JLabel logIn = new JLabel("Successful login!");
+                logIn.setBounds(10,10,500,600);
+                container1.add(logIn);
+                //super.wait(1000);
+                this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
 
-            logIn.setBackground(Color.black);
+            }
+            else{
+                JOptionPane.showMessageDialog(this,"Error");
+            }
+
 
 
         }
@@ -109,6 +118,16 @@ public class LogInPortal extends JFrame implements ActionListener {
             }
         }
     }
+/*
+    private boolean tryLogin(JTextField userTextField, JPasswordField passwordField) {
+        user = Database.userExists(); //returns a string or throw message
+        boolean match = Database.passwordMatch(gmail,password);
+        if(match){
+            new StuartView(user);        }
+        return match;
+    }
+   */
+
 }
 
 
