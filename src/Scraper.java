@@ -9,13 +9,17 @@ import java.util.Scanner;
 public class Scraper {
     FavEducation fe = new FavEducation();
     public Scraper(String admissionType) throws IOException {
+
         scrape(admissionType);
     }
 
+    /**
+     * This would in reality have the search String as input, to be prepared for the Jsoup.connect
+     * @param admissionType
+     */
     public void scrape(String admissionType) {
         Document document;
-        String s;
-        int i = 0;
+
         try {
             document = Jsoup.connect("https://www.studera.nu/jamfor-utbildning/?asp=Chalmers+tekniska+h%c3%b6gskola&ast=DATATEKNIK%2c+CIVILINGENJ%c3%96R&q=datateknik&f=2%5bcth&e=&ce=e.uoh.cth.tkdat.49000.20222%2ce.uoh.cth.tidal.62000.20222&cv=").get();
             Elements table = document.getElementsByTag("table");
