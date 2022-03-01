@@ -360,6 +360,45 @@ public class Database {
         }
     }
 
+    //Login
+    public String userExists(String email){
+        int highestID = 0;
+        String userID = "";
+        try (Scanner scanner = new Scanner(new File("src/dBase.txt"));){
+            while (scanner.hasNextLine()) {
+                String store = scanner.nextLine();
+                if(scanner.nextLine().contains(email)) {
+                    userID = store;
+                }
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        if(userID.equals("")){
+            JPanel panel = new JPanel();
+            JOptionPane.showMessageDialog(panel, "No user with this email exists", "Warning", JOptionPane.WARNING_MESSAGE);
+            throw new ArithmeticException("Wrong email");
+        }
+        return userID;
+    }
+
+    public boolean passwordMatch(String email, String password){
+        try (Scanner scanner = new Scanner(new File("src/dBase.txt"));){
+            while (scanner.hasNextLine()) {
+                if(scanner.nextLine().contains(email)) {
+                    scanner.nextLine();
+                    scanner.nextLine();
+                    if(scanner.nextLine().equals(password)){
+                        return true;
+                    }
+                }
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
     //Misc Methods ------------------------------------------------------------------------------------------------------
     private static int charIndex(String result, String charfind, int position){
         int index = -1;
@@ -437,6 +476,7 @@ public class Database {
     }
         return highestID;
     }
+
 
 }
 
