@@ -3,9 +3,10 @@ import java.io.IOException;
 
 public class App {
     public static void main(String[] args) throws IOException {
-        String user = "001";
-/*
+
+
         //full app
+        String user = "001";
         LogInPortal frame = new LogInPortal();
         frame.setTitle("Stu.art");
         frame.setVisible(true);
@@ -13,9 +14,8 @@ public class App {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setResizable(false);
         new App();
-*/
         //uncomment for testing
-        new StuartView(user);
+        //new StuartView(user);
 
 
     }
