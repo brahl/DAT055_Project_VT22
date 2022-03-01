@@ -50,8 +50,8 @@ public class Database {
 
     //reader model methods ------------------------------------------------------------------------------------------------------
     public Grades readDatabaseGrades(String userID){
-        try(Scanner scanner = new Scanner(new File("src/dBase.txt"));) {
-            //Scanner scanner = new Scanner(new File("src/dBase.txt"));
+        try(Scanner scanner = new Scanner(new File("src/main/java/dBase.txt"));) {
+            //Scanner scanner = new Scanner(new File("src/main/java/dBase.txt"));
             while (scanner.hasNextLine()) {
                 if(scanner.nextLine().equals(userID)) {
                     for(int i = 0; i < 4; i++){
@@ -83,7 +83,7 @@ public class Database {
         return gs;
     }
     public FavEducations readDatabaseFavCourses(String userID){
-        try (Scanner scanner = new Scanner(new File("src/dBase.txt"));){
+        try (Scanner scanner = new Scanner(new File("src/main/java/dBase.txt"));){
             while (scanner.hasNextLine()) {
                 if(scanner.nextLine().equals(userID)) {
                     for(int i = 0; i < 5; i++){
@@ -128,7 +128,7 @@ public class Database {
         }
         String finalResult = "";
 
-        try (Scanner scanner = new Scanner(new File("src/dBase.txt"));){
+        try (Scanner scanner = new Scanner(new File("src/main/java/dBase.txt"));){
             while (scanner.hasNextLine()) {
                 if(scanner.nextLine().equals(userID)) {
                     while(index != 0) {
@@ -154,7 +154,7 @@ public class Database {
             throw new ArithmeticException("updateData can't be null");
         }
 
-        File originalFile = new File("src/dBase.txt");
+        File originalFile = new File("src/main/java/dBase.txt");
         File tempFile = new File("tempfile.txt");
         try (BufferedReader br = new BufferedReader(new FileReader(originalFile));
              PrintWriter pw = new PrintWriter(new FileWriter(tempFile));){
@@ -193,7 +193,7 @@ public class Database {
         }
     }
     public static void addUser(String email, String fName, String lName, String password){
-        File originalFile = new File("src/dBase.txt");
+        File originalFile = new File("src/main/java/dBase.txt");
         File tempFile = new File("tempfile.txt");
         try ( BufferedReader br = new BufferedReader(new FileReader(originalFile));
               PrintWriter pw = new PrintWriter(new FileWriter(tempFile));){
@@ -244,7 +244,7 @@ public class Database {
             JOptionPane.showMessageDialog(panel, "@ and : are forbidden characters", "Warning", JOptionPane.WARNING_MESSAGE);
             throw new ArithmeticException("Coursename already exists");
         }
-        File originalFile = new File("src/dBase.txt");
+        File originalFile = new File("src/main/java/dBase.txt");
         File tempFile = new File("tempfile.txt");
 
         try ( BufferedReader br = new BufferedReader(new FileReader(originalFile));
@@ -301,7 +301,7 @@ public class Database {
             throw new ArithmeticException("Coursename already exists");
         }
 
-        File originalFile = new File("src/dBase.txt");
+        File originalFile = new File("src/main/java/dBase.txt");
         File tempFile = new File("tempfile.txt");
         try (BufferedReader br = new BufferedReader(new FileReader(originalFile));
              PrintWriter pw = new PrintWriter(new FileWriter(tempFile));){
@@ -339,7 +339,7 @@ public class Database {
         }
     }
     public static void removeGrade(String userID, String course){
-        File originalFile = new File("src/dBase.txt");
+        File originalFile = new File("src/main/java/dBase.txt");
         File tempFile = new File("tempfile.txt");
         try (BufferedReader br = new BufferedReader(new FileReader(originalFile));
              PrintWriter pw = new PrintWriter(new FileWriter(tempFile));){
@@ -385,7 +385,7 @@ public class Database {
     public static String userExists(String email){
         String userID = "";
         String temp = "";
-        try (Scanner scanner = new Scanner(new File("src/dBase.txt"));){
+        try (Scanner scanner = new Scanner(new File("src/main/java/dBase.txt"));){
             while (scanner.hasNextLine()) {
                 String store = scanner.nextLine();
                 if(scanner.hasNextLine()){
@@ -407,7 +407,7 @@ public class Database {
         return userID;
     }
     public static boolean passwordMatch(String email, String password){
-        try (Scanner scanner = new Scanner(new File("src/dBase.txt"));){
+        try (Scanner scanner = new Scanner(new File("src/main/java/dBase.txt"));){
             while (scanner.hasNextLine()) {
                 if(scanner.nextLine().contains(email)) {
                     scanner.nextLine();
@@ -438,7 +438,7 @@ public class Database {
         int amountOfGrades = 0;
 
         try {
-            Scanner scanner = new Scanner(new File("src/dBase.txt"));
+            Scanner scanner = new Scanner(new File("src/main/java/dBase.txt"));
             while (scanner.hasNextLine()) {
                 if(scanner.nextLine().equals(userID)) {
                     for(int i = 0; i < 4; i++){
@@ -464,7 +464,7 @@ public class Database {
         int amountOfFavEdu = 0;
 
         try {
-            Scanner scanner = new Scanner(new File("src/dBase.txt"));
+            Scanner scanner = new Scanner(new File("src/main/java/dBase.txt"));
             while (scanner.hasNextLine()) {
                 if(scanner.nextLine().equals(userID)) {
                     for(int i = 0; i < 5; i++){
@@ -488,7 +488,7 @@ public class Database {
     public static String highestUserID(){
         int highestID = 0;
         String highestIDString = "000";
-        try (Scanner scanner = new Scanner(new File("src/dBase.txt"));){
+        try (Scanner scanner = new Scanner(new File("src/main/java/dBase.txt"));){
         while (scanner.hasNextLine()) {
             String result = scanner.nextLine();
 

@@ -38,3 +38,11 @@ password q
 grades @
 fEdus @
 
+006
+email Test@gmail.com
+fName adfda
+lName dadafac
+password q
+grades @Kurs:100:A@
+fEdus @
+
