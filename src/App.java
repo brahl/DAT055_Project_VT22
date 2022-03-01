@@ -16,7 +16,5 @@ public class App {
         new App();
         //uncomment for testing
         //new StuartView(user);
-
-
     }
 }
