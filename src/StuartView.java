@@ -1,4 +1,5 @@
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -36,13 +37,15 @@ public class StuartView extends JFrame{
     private JTextField searchField;
     private JButton searchStat;
     private JComboBox urvalsAlt;
-    private SearchAntagning searchRes;
 
-    private DefaultListModel<String> listFavEdModel;
-    private JList<String> listFavEducation;
-    private DefaultListModel<String> listAntagningModel;
-    private JList listAntagning;
+
     private JLabel meritLabelAntLabel;
+    private DefaultTableModel utbModel;
+    private DefaultTableModel antModel;
+    private JTable utbTable;
+    private JTable antTable;
+    private JLabel StatusLabel;
+
     private String courselistitem;
 
 
@@ -68,6 +71,8 @@ public class StuartView extends JFrame{
         frame.getContentPane().setBackground(new Color(0xFFFFFFF));
         frame.add(showView());
         frame.setVisible(true);
+        StatusLabel.setText("Laddar...");
+        StatusLabel.setVisible(false);
 
    addCourse.addActionListener(new ActionListener() {
             @Override
@@ -90,6 +95,8 @@ public class StuartView extends JFrame{
                 }
                 meritLabel.setText("Merit: "+ df.format(grades.printGPA()));
                 meritProfilLabel.setText("Merit: "+ df.format(grades.printGPA()));
+                meritLabelAntLabel.setText("Merit: "+df.format(grades.printGPA()));
+
             }
 
         });
@@ -118,41 +125,70 @@ public class StuartView extends JFrame{
         searchStat.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String search = searchField.getText();
+                String query =  searchField.getText();
                 try {
-                    SearchAntagning searchRes = new SearchAntagning(search);
-                    updateSearchResults(searchRes);
+                    if(searchValid(query)){
+                        StatusLabel.setVisible(true);
+                        clearAntagningsView();
+                        updateAntagningsView();
+                        StatusLabel.setVisible(false);
+
+                    }
+                    else{
+                        clearAntagningsView();
+                    }
+
                 } catch (IOException ex) {
                     ex.printStackTrace();
                 }
-
-
-            }
-            private void updateSearchResults(SearchAntagning searchRes) {
-                listAntagningModel.removeAllElements();
-                listAntagningModel.addElement(searchRes.b1.fe.admissionM1);
-                listAntagningModel.addElement(searchRes.b1.fe.admissionM2);
-                listAntagningModel.addElement(searchRes.b1.fe.admissionM3);
-                listAntagningModel.addElement(searchRes.b1.fe.admissionM4);
-                listAntagningModel.addElement(searchRes.b1.fe.admissionM5);
-                listFavEdModel.removeAllElements();
-                listFavEdModel.addElement(searchRes.b1.fe.uni);
-                listFavEdModel.addElement(searchRes.b1.fe.pName);
-                listFavEdModel.addElement(searchRes.b1.fe.credits);
-
+                //String search = searchField.getText();
 
             }
+
+            private void clearAntagningsView() {
+                utbModel.setRowCount(0);
+                antModel.setRowCount(0);
+            }
+
+            private void updateAntagningsView() throws IOException {
+                Scraper search = new Scraper("BI");
+                utbModel.addRow(new Object[]{search.fe.uni,search.fe.pName,search.fe.credits});
+                antModel.addRow(new Object[]{"2021",search.fe.admissionM1});
+                antModel.addRow(new Object[]{"2020",search.fe.admissionM2});
+                antModel.addRow(new Object[]{"2019",search.fe.admissionM3});
+                antModel.addRow(new Object[]{"2018",search.fe.admissionM4});
+                antModel.addRow(new Object[]{"2017",search.fe.admissionM5});
+
+            }
+
         });
 
     }
 
+    private boolean searchValid(String query) {
+        if(query.equals("Datateknik")){
+            return true;
+        }
+        if(query.equals("Handels")){
+            JOptionPane.showMessageDialog(null,"Konformistiska ****");
+            return false;
+        }
+        else{
+            return false;
+        }
+    }
 
 
     private void initAntagningsView(String user) {
-        listFavEdModel = new DefaultListModel<>();
-        listFavEducation.setModel(listFavEdModel);
-        listAntagningModel = new DefaultListModel<>();
-        listAntagning.setModel(listAntagningModel);
+        utbModel = new DefaultTableModel(
+                null,
+                new String[]{"Universitet","Program","Högskolepoäng"}
+        );
+        utbTable.setModel(utbModel);
+        antModel = new DefaultTableModel(
+                null,
+                new String[]{"År","Antagningspoäng"});
+        antTable.setModel(antModel);
 
         meritLabelAntLabel.setText("Merit: "+df.format(grades.printGPA()));
 
