@@ -361,10 +361,15 @@ public class Database {
     //Login
     public static String userExists(String email){
         String userID = "";
+        String temp = "";
         try (Scanner scanner = new Scanner(new File("src/dBase.txt"));){
             while (scanner.hasNextLine()) {
                 String store = scanner.nextLine();
-                if(scanner.hasNextLine() && scanner.nextLine().contains(email)) {
+                if(scanner.hasNextLine()){
+                    temp = scanner.nextLine();
+                }
+
+                if(temp.contains(email) && temp.length()-6 == email.length()) {
                     userID = store;
                 }
             }
@@ -384,8 +389,8 @@ public class Database {
                 if(scanner.nextLine().contains(email)) {
                     scanner.nextLine();
                     scanner.nextLine();
-
-                    if(scanner.nextLine().contains(password)){
+                    String result = scanner.nextLine();
+                    if(result.contains(password) && result.length()-9 == password.length()){
                         return true;
                     }
                 }
