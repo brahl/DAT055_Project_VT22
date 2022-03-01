@@ -4,7 +4,6 @@ import java.io.IOException;
 public class App {
     public static void main(String[] args) throws IOException {
 
-
         //full app
         String user = "001";
         LogInPortal frame = new LogInPortal();
