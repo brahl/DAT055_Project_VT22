@@ -1,5 +1,5 @@
 001
-email viktor.rafstedt@hotmail.com
+email freddan.breddan@gmail.com
 fName Fredrik
 lName Reinfeldt
 password qwerty

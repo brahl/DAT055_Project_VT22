@@ -1,5 +1,5 @@
 001
-email hej
+email freddan.breddan@gmail.com
 fName Fredrik
 lName Reinfeldt
 password qwerty
