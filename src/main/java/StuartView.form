@@ -199,6 +199,14 @@
                   <text value="Kurspoäng"/>
                 </properties>
               </component>
+              <component id="2eebe" class="javax.swing.JButton" binding="tabortButton" default-binding="true">
+                <constraints>
+                  <grid row="2" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <text value="Tabort"/>
+                </properties>
+              </component>
             </children>
           </grid>
           <grid id="8c29d" binding="AntagningsStat" layout-manager="GridLayoutManager" row-count="4" column-count="7" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">

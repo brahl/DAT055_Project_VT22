@@ -54,6 +54,7 @@ public class StuartView extends JFrame{
     private JButton ProfileButton;
     private DefaultTableModel courseModel;
     private JTable courseTable;
+    private JButton tabortButton;
 
     private String courselistitem;
 
@@ -92,6 +93,7 @@ public class StuartView extends JFrame{
                 if(valid){
                     grades.addGrade(new Grade(kursField.getText(),betygField.getText(),pointsField.getText()));
                 }
+
 
                 //empty input fields
                 kursField.setText("");
@@ -191,6 +193,17 @@ public class StuartView extends JFrame{
                 } catch (IOException d) {
                     d.printStackTrace();
                 }
+            }
+        });
+        tabortButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int column = 0;
+                int row = courseTable.getSelectedRow();
+                String value = courseTable.getModel().getValueAt(row, column).toString();
+                //Database.removeGrade(user,value);
+                //updateCourseLable();
+
             }
         });
     }
