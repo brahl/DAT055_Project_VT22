@@ -88,8 +88,11 @@ public class StuartView extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 //add to session
-                grades.addGrade(new Grade(kursField.getText(),betygField.getText(),pointsField.getText()));
-                Database.addGrade(user,kursField.getText(),pointsField.getText(),betygField.getText());
+                boolean valid = Database.addGrade(user,kursField.getText(),pointsField.getText(),betygField.getText());
+                if(valid){
+                    grades.addGrade(new Grade(kursField.getText(),betygField.getText(),pointsField.getText()));
+                }
+
                 //empty input fields
                 kursField.setText("");
                 betygField.setText("");
