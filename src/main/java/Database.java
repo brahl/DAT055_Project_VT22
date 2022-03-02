@@ -284,7 +284,6 @@ public class Database {
             // Rename the new file to the filename the original file had.
             if (!tempFile.renameTo(originalFile))
                 System.out.println("Could not rename file");
-
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -332,7 +331,6 @@ public class Database {
                 System.out.println("Could not delete file");
                 return;
             }
-
             // Rename the new file to the filename the original file had.
             if (!tempFile.renameTo(originalFile))
                 System.out.println("Could not rename file");

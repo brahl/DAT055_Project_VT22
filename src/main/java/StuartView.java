@@ -100,19 +100,9 @@ public class StuartView extends JFrame{
                 betygField.setText("");
                 pointsField.setText("");
                 //updateJlist
-                updateCourseLabel();
+                updateCourseLabel(user);
             }
-            private void updateCourseLabel() {
-                courseModel.setRowCount(0);
 
-                for(Grade g : grades){
-                    courseModel.addRow(new Object[]{g.kurs,g.lettergrade,g.kurspoäng});
-                }
-                meritLabel.setText("Merit: "+ df.format(grades.printGPA()));
-                meritProfilLabel.setText("Merit: "+ df.format(grades.printGPA()));
-                meritLabelAntLabel.setText("Merit: "+df.format(grades.printGPA()));
-
-            }
 
         });
 
@@ -201,11 +191,23 @@ public class StuartView extends JFrame{
                 int column = 0;
                 int row = courseTable.getSelectedRow();
                 String value = courseTable.getModel().getValueAt(row, column).toString();
-                //Database.removeGrade(user,value);
-                //updateCourseLable();
-
+                Database.removeGrade(user,value);
+                updateCourseLabel(user);
             }
         });
+    }
+
+    private void updateCourseLabel(String user) {
+        Database db = new Database();
+        courseModel.setRowCount(0);
+        grades = db.readDatabaseGrades(user);
+        for(Grade g : grades){
+            courseModel.addRow(new Object[]{g.kurs,g.lettergrade,g.kurspoäng});
+        }
+        meritLabel.setText("Merit: "+ df.format(grades.printGPA()));
+        meritProfilLabel.setText("Merit: "+ df.format(grades.printGPA()));
+        meritLabelAntLabel.setText("Merit: "+df.format(grades.printGPA()));
+
     }
 
     private boolean searchValid(String query) {
