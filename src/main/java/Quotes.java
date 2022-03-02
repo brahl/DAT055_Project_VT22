@@ -6,6 +6,9 @@ import java.net.http.HttpResponse;
 
 public class Quotes {
 
+
+    private String res;
+
     HttpRequest request = HttpRequest.newBuilder()
             .uri(URI.create("https://motivational-quotes1.p.rapidapi.com/motivation"))
             .header("content-type", "application/json")
@@ -16,8 +19,11 @@ public class Quotes {
     HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
 
     public Quotes() throws IOException, InterruptedException {
-        System.out.println(response.body());
+        this.res = response.body();
+        //System.out.println(response.body());
     }
-
+    public String getRes() {
+        return res;
+    }
 
 }

@@ -3,6 +3,7 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentAdapter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -54,7 +55,11 @@ public class StuartView extends JFrame{
     private JTable courseTable;
     private JButton tabortButton;
     private JLabel sumKp;
-
+    private JList<String> chatMessages;
+    private JTextField chatField;
+    private JButton sendButton;
+    private JPanel chatPanel;
+    private DefaultListModel<String> chatModel;
     private String courselistitem;
 
 
@@ -66,7 +71,10 @@ public class StuartView extends JFrame{
 
     public StuartView(String user){
 
-
+        chatModel = new DefaultListModel<>();
+        chatMessages.setModel(chatModel);
+        //MyCellRenderer cellRenderer = new MyCellRenderer(80);
+        //chatMessages.setCellRenderer(cellRenderer);
         initMinaBetygView(user,db);
         initProfilView(user);
         initProfilePic(user);
@@ -197,6 +205,26 @@ public class StuartView extends JFrame{
                 String value = courseTable.getModel().getValueAt(row, column).toString();
                 Database.removeGrade(user,value);
                 updateCourseLabel(user);
+            }
+        });
+        chatMessages.addComponentListener(new ComponentAdapter() {
+        });
+        sendButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String message = sendButton.getText();
+               chatModel.addElement(message);
+                try {
+
+                   Quotes q = new Quotes();
+                    chatModel.addElement(q.getRes());
+                } catch (IOException | InterruptedException ex) {
+                    ex.printStackTrace();
+                }
+
+
+
+
             }
         });
     }
