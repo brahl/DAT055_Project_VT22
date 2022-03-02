@@ -13,8 +13,8 @@ import java.util.Scanner;
 
 public class Scraper {
     FavEducation fe = new FavEducation();
-    public Scraper(String admissionType) throws IOException {
-        scrape(admissionType, "Handels");
+    public Scraper(String admissionType,String query) throws IOException {
+        scrape(admissionType, query);
     }
 
     /**
@@ -34,7 +34,7 @@ public class Scraper {
                 }
                 Elements table = document.getElementsByTag("table");
                 for (Element e : table) {
-                    writeToTemp(e.getElementsByClass("sr-only").toString(), admissionType);
+                    writeToTemp(e.getElementsByClass("sr-only").toString(), admissionType, searchType);
                 }
             } catch (IOException e) {
                 e.printStackTrace();
@@ -42,7 +42,7 @@ public class Scraper {
 
     }
 
-    public FavEducation writeToTemp(String s, String admissionType) throws FileNotFoundException {
+    public FavEducation writeToTemp(String s, String admissionType,String query) throws FileNotFoundException {
         String result;
         Scanner scanner = new Scanner(s);
         System.out.println(s);
@@ -51,9 +51,17 @@ public class Scraper {
             //For admissionType == "BI" or "BII"
             if(admissionType.equals("BI") || admissionType.equals("BII")) {
                 if (result.contains("(" + admissionType + ")")) {
-                    fe.pName = "Datateknik";
-                    fe.uni = "Chalmers";
-                    fe.credits = "180hp";
+                    if(query.equals("Chalmers")){
+                        fe.pName = "Datateknik";
+                        fe.uni = "Chalmers";
+                        fe.credits = "180hp";
+                    }
+                    if(query.equals("Handels")){
+                        fe.pName = "Ekonomieprogrammet";
+                        fe.uni = "Handelshögskolan Göteborg";
+                        fe.credits = "180hp";
+                    }
+
                     result = scanner.nextLine();
                     fe.admissionM1 = result.substring(59, 64);
                     result = scanner.nextLine();
