@@ -175,6 +175,11 @@ public class StuartView extends JFrame{
             public void actionPerformed(ActionEvent e) {
                 try {
                     String newPic = JOptionPane.showInputDialog("Enter source path to your profile picture");
+                    if(!newPic.substring(newPic.length()-3).equals("jpg")){
+                            JPanel panel = new JPanel();
+                            JOptionPane.showMessageDialog(panel, "Image format has to be .jpg", "Warning", JOptionPane.WARNING_MESSAGE);
+                            throw new ArithmeticException("Not jpeg");
+                    }
                     Path bytes = Files.copy(new java.io.File(newPic).toPath(),
                             new java.io.File("ProfilePictures/"+user+".jpg").toPath(),
                             REPLACE_EXISTING,
