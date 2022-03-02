@@ -3,7 +3,7 @@ email freddan.breddan@gmail.com
 fName Fredrik
 lName Reinfeldt
 password qwerty
-grades @Svenska 4:20:B@Svenska1:20:B@Svenska 2:20:B@Engelsk:100:F@
+grades @Svenska:100:A@
 fEdus @Programnamn:skola:courseCredits:antagningspoängår-5:apår-4:apår-3:apår-2:apår-1:apår0@Datateknik:Chalmers:180hp:18.23:17.23:17.23:17.23:15.55@
 
 002

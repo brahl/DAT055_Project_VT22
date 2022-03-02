@@ -57,9 +57,9 @@ public class Scraper {
                         fe.credits = "180hp";
                     }
                     if(query.equals("Handels")){
-                        fe.pName = "Ekonomieprogrammet";
+                        fe.pName = "Jurist";
                         fe.uni = "Handelshögskolan Göteborg";
-                        fe.credits = "180hp";
+                        fe.credits = "270hp";
                     }
 
                     result = scanner.nextLine();
