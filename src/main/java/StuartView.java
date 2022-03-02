@@ -27,7 +27,6 @@ public class StuartView extends JFrame{
     private JLabel Kurs;
     private JLabel kurpoint;
     private JLabel letterGrade;
-    private JPanel gradeListPanel;
     private JButton minaBetygBtn;
     private JButton updatePassword;
     private JButton updateEmail;
@@ -37,7 +36,7 @@ public class StuartView extends JFrame{
     private JLabel emailLabel;
 
     private DefaultListModel<String> listCourseModel;
-    private JList<String> listCourses;
+
     private JPanel StuartPanel;
     private JPanel AntagningsStat;
     private JTextField searchField;
@@ -53,6 +52,8 @@ public class StuartView extends JFrame{
     private JLabel StatusLabel;
     private JLabel ImageLabel;
     private JButton ProfileButton;
+    private DefaultTableModel courseModel;
+    private JTable courseTable;
 
     private String courselistitem;
 
@@ -97,10 +98,10 @@ public class StuartView extends JFrame{
                 updateCourseLabel();
             }
             private void updateCourseLabel() {
-                listCourseModel.removeAllElements();
+                courseModel.setRowCount(0);
+
                 for(Grade g : grades){
-                    courselistitem = g.kurs + " " + g.kurspoäng + " "+ g.lettergrade;
-                    listCourseModel.addElement(courselistitem);
+                    courseModel.addRow(new Object[]{g.kurs,g.lettergrade,g.kurspoäng});
                 }
                 meritLabel.setText("Merit: "+ df.format(grades.printGPA()));
                 meritProfilLabel.setText("Merit: "+ df.format(grades.printGPA()));
@@ -110,9 +111,6 @@ public class StuartView extends JFrame{
 
         });
 
-        listCourses.addListSelectionListener(e -> {
-
-        });
 
 
         updatePassword.addActionListener(e -> {
@@ -230,8 +228,11 @@ public class StuartView extends JFrame{
      * @param user target user
      */
     private void initMinaBetygView(String user, Database db) {
-        listCourseModel = new DefaultListModel<>();
-        listCourses.setModel(listCourseModel);
+        courseModel = new DefaultTableModel(
+                null,
+                new String[]{"Kurs","Betyg","Kurspoäng"}
+        );
+        courseTable.setModel(courseModel);
         initCourseLabel(user,db);
         meritLabel.setText("Merit: "+ df.format(grades.printGPA()));
     }
@@ -241,14 +242,14 @@ public class StuartView extends JFrame{
      * @param user target user
      */
     public void initCourseLabel(String user, Database db) {
-        listCourseModel.removeAllElements();
+        courseModel.setRowCount(0);
         Grades gs = db.readDatabaseGrades(user);
 
         for(Grade g : gs){
             System.out.println(g.kurs);
             grades.addGrade(new Grade(g.kurs, g.kurspoäng, g.lettergrade));
-            courselistitem = g.kurs+" "+g.kurspoäng+ " "+ g.lettergrade;
-            listCourseModel.addElement(courselistitem);
+            courseModel.addRow(new Object[]{g.kurs,g.kurspoäng,g.lettergrade});
+
 
         }
 
