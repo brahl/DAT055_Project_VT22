@@ -59,8 +59,8 @@ public class LogInPortal extends JFrame implements ActionListener {
     }
 
     public void setFonts(){
-        Font myFont = new Font("Serif", Font.BOLD, 30);
-        Font myFont1 = new Font("Serif", Font.BOLD, 15);
+        Font myFont = new Font("Source Code Pro", Font.BOLD, 30);
+        Font myFont1 = new Font("Source Code Pro", Font.BOLD, 15);
         welcomeLabel.setFont(myFont);
         memberLabel.setFont(myFont1);
         passwordLabel.setFont(myFont1);
@@ -119,6 +119,7 @@ public class LogInPortal extends JFrame implements ActionListener {
                 public void actionPerformed(ActionEvent e) {
                     Database.addUser(email.getText(), firstName.getText(), lastName.getText(), password.getText());
                     JOptionPane.showMessageDialog(null, "Account has been created");
+                    frame2.dispose();
                 }
             });
 
@@ -163,6 +164,7 @@ public class LogInPortal extends JFrame implements ActionListener {
         if(!user.equals("")){
              boolean match = Database.passwordMatch(userTextField.toString(),passwordField.toString());
              if(match){
+               this.dispose();
                new StuartView(user);
                return true;
              }

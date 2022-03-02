@@ -46,3 +46,19 @@ password q
 grades @
 fEdus @
 
+006
+email johan@gmail.com
+fName Johan
+lName Birgersson
+password q
+grades @
+fEdus @
+
+007
+email Juan@gmail.com
+fName Juan
+lName Burgersson
+password q
+grades @Spanska:100:A@Spanska 2:100:A@Spanska 100:100:A@Spanska -1:100:F@
+fEdus @
+
