@@ -53,6 +53,7 @@ public class StuartView extends JFrame{
     private DefaultTableModel courseModel;
     private JTable courseTable;
     private JButton tabortButton;
+    private JLabel sumKp;
 
     private String courselistitem;
 
@@ -198,12 +199,15 @@ public class StuartView extends JFrame{
     }
 
     private void updateCourseLabel(String user) {
+        int kp = 0;
         Database db = new Database();
         courseModel.setRowCount(0);
         grades = db.readDatabaseGrades(user);
         for(Grade g : grades){
             courseModel.addRow(new Object[]{g.kurs,g.lettergrade,g.kurspoäng});
+            kp += Integer.parseInt(g.kurspoäng);
         }
+        sumKp.setText("Summa kurspoäng: " + kp);
         meritLabel.setText("Merit: "+ df.format(grades.printGPA()));
         meritProfilLabel.setText("Merit: "+ df.format(grades.printGPA()));
         meritLabelAntLabel.setText("Merit: "+df.format(grades.printGPA()));
