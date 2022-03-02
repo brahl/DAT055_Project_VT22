@@ -12,8 +12,6 @@ import static java.nio.file.LinkOption.NOFOLLOW_LINKS;
 import static java.nio.file.StandardCopyOption.COPY_ATTRIBUTES;
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 
-//Fixa felhantering som wrong entry, just nu låser programmet sig om man exempelvis skriver text i kurspoäng.
-
 public class StuartView extends JFrame{
     private JTabbedPane tabbedPane1;
     private JPanel profilView;
@@ -207,7 +205,6 @@ public class StuartView extends JFrame{
         meritLabel.setText("Merit: "+ df.format(grades.printGPA()));
         meritProfilLabel.setText("Merit: "+ df.format(grades.printGPA()));
         meritLabelAntLabel.setText("Merit: "+df.format(grades.printGPA()));
-
     }
 
     private boolean searchValid(String query) {
@@ -270,10 +267,8 @@ public class StuartView extends JFrame{
 
         for(Grade g : gs){
             System.out.println(g.kurs);
-            grades.addGrade(new Grade(g.kurs, g.kurspoäng, g.lettergrade));
-            courseModel.addRow(new Object[]{g.kurs,g.kurspoäng,g.lettergrade});
-
-
+            grades.addGrade(new Grade(g.kurs, g.lettergrade, g.kurspoäng));
+            courseModel.addRow(new Object[]{g.kurs,g.lettergrade,g.kurspoäng});
         }
 
     }

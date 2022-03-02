@@ -18,6 +18,8 @@ class Grade {
     }
 
     public Grade(String k, String lg, String kp){
+        System.out.println("lg=" + lg);
+        System.out.println("kp=" + kp);
         if(Objects.equals(lg, "A")){
             this.grade=20;
         }
@@ -68,6 +70,8 @@ public class Grades implements Iterable<Grade>{
         double res=0;
         try {
             for (Grade grade : grades) {
+                System.out.println("Grade: " + grade.grade);
+                System.out.println("Kurspoäng: " + grade.kurspoäng);
                 int kp = Integer.parseInt(grade.kurspoäng);
                 count += kp;
                 res += grade.grade * kp;
@@ -78,10 +82,6 @@ public class Grades implements Iterable<Grade>{
 
         return (res/count);
     }
-
-
-
-
 
     @Override
     public Iterator<Grade> iterator() {
