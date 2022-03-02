@@ -131,7 +131,7 @@ public class StuartView extends JFrame{
                     if(searchValid(query)){
                         StatusLabel.setVisible(true);
                         clearAntagningsView();
-                        updateAntagningsView();
+                        updateAntagningsView(query);
                         StatusLabel.setVisible(false);
 
                     }
@@ -151,14 +151,17 @@ public class StuartView extends JFrame{
                 antModel.setRowCount(0);
             }
 
-            private void updateAntagningsView() throws IOException {
-                Scraper search = new Scraper("BI");
-                utbModel.addRow(new Object[]{search.fe.uni,search.fe.pName,search.fe.credits});
-                antModel.addRow(new Object[]{"2021",search.fe.admissionM1});
-                antModel.addRow(new Object[]{"2020",search.fe.admissionM2});
-                antModel.addRow(new Object[]{"2019",search.fe.admissionM3});
-                antModel.addRow(new Object[]{"2018",search.fe.admissionM4});
-                antModel.addRow(new Object[]{"2017",search.fe.admissionM5});
+            private void updateAntagningsView(String query) throws IOException {
+
+                    Scraper search = new Scraper("BI", query);
+                    utbModel.addRow(new Object[]{search.fe.uni,search.fe.pName,search.fe.credits});
+                    antModel.addRow(new Object[]{"2021",search.fe.admissionM1});
+                    antModel.addRow(new Object[]{"2020",search.fe.admissionM2});
+                    antModel.addRow(new Object[]{"2019",search.fe.admissionM3});
+                    antModel.addRow(new Object[]{"2018",search.fe.admissionM4});
+                    antModel.addRow(new Object[]{"2017",search.fe.admissionM5});
+
+
 
             }
 
@@ -214,12 +217,11 @@ public class StuartView extends JFrame{
     }
 
     private boolean searchValid(String query) {
-        if(query.equals("Datateknik")){
+        if(query.equals("Chalmers")){
             return true;
         }
-        if(query.equals("Handels")){
-            JOptionPane.showMessageDialog(null,"Konformistiska ****");
-            return false;
+        else if(query.equals("Handels")){
+            return true;
         }
         else{
             return false;
