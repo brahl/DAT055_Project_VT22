@@ -10,17 +10,24 @@ import java.util.Scanner;
 public class Scraper {
     FavEducation fe = new FavEducation();
     public Scraper(String admissionType) throws IOException {
-        scrape(admissionType);
+        scrape(admissionType, "Handels");
     }
 
     /**
      * This would in reality have the search String as input, to be prepared for the Jsoup.connect
      * @param admissionType
      */
-    public void scrape( String admissionType) {
+    public void scrape(String admissionType, String searchType) {
         Document document;
             try {
-                document = Jsoup.connect("https://www.studera.nu/jamfor-utbildning/?asp=Chalmers+tekniska+h%c3%b6gskola&ast=DATATEKNIK%2c+CIVILINGENJ%c3%96R&q=datateknik&f=2%5bcth&e=&ce=e.uoh.cth.tkdat.49000.20222%2ce.uoh.cth.tidal.62000.20222&cv=").get();
+                if(searchType.equals("Chalmers")){
+                    System.out.println("Sant mannen");
+                    document = Jsoup.connect("https://www.studera.nu/jamfor-utbildning/?asp=Chalmers+tekniska+h%c3%b6gskola&ast=DATATEKNIK%2c+CIVILINGENJ%c3%96R&q=datateknik&f=2%5bcth&e=&ce=e.uoh.cth.tkdat.49000.20222%2ce.uoh.cth.tidal.62000.20222&cv=").get();
+                } else if(searchType.equals("Handels")){
+                    document = Jsoup.connect("https://www.studera.nu/jamfor-utbildning/?asp=G%c3%b6teborgs+universitet&ast=Juristprogrammet&q=juristprogrammet&e=i.uoh.gu.s2jur.1g83b.20222&ce=e.uoh.gu.s2jur.1g83b.20222%2ce.uoh.gu.s2jur.1g83b.20212&cv=").get();
+                }else{
+                    document = null;
+                }
                 Elements table = document.getElementsByTag("table");
                 for (Element e : table) {
                     writeToTemp(e.getElementsByClass("sr-only").toString(), admissionType);
