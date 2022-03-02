@@ -228,6 +228,7 @@ public class StuartView extends JFrame{
 
 
     private void initAntagningsView(String user) {
+        int kp = 0;
         utbModel = new DefaultTableModel(
                 null,
                 new String[]{"Universitet","Program","Högskolepoäng"}
@@ -237,7 +238,10 @@ public class StuartView extends JFrame{
                 null,
                 new String[]{"År","Antagningspoäng"});
         antTable.setModel(antModel);
-
+        for(Grade g : grades){
+            kp += Integer.parseInt(g.kurspoäng);
+        }
+        sumKp.setText("Summa kurspoäng: " + kp);
         meritLabelAntLabel.setText("Merit: "+df.format(grades.printGPA()));
 
     }
