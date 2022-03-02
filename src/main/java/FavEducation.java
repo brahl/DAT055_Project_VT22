@@ -1,3 +1,8 @@
+/**
+ * rename this to AntagningsStatistik
+ */
+
+
 public class FavEducation {
     String pName;
     String uni;

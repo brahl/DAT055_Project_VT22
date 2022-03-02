@@ -7,6 +7,10 @@ import javax.swing.*;
 import java.io.*;
 import java.util.Scanner;
 
+/**
+ * Rename this class to search
+ */
+
 public class Scraper {
     FavEducation fe = new FavEducation();
     public Scraper(String admissionType) throws IOException {
