@@ -62,11 +62,5 @@ password q
 grades @Spanska:100:A@Spanska 2:100:A@Spanska 100:100:A@Spanska -1:100:F@
 fEdus @
 
-008
-email juan
-fName juan
-lName burger
-password q
-grades @
-fEdus @
+
 
