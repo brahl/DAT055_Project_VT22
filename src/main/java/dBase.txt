@@ -65,10 +65,10 @@ fEdus @
 
 
 009
-email j
-fName j
-lName j
+email johankoddar@gmail.com
+fName joh
+lName koddar
 password q
-grades @
+grades @Svenska 1:100:A@Svenska 2:100:A@Datateknik:80:B@
 fEdus @
 
