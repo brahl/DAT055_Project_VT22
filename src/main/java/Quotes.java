@@ -22,7 +22,10 @@ public class Quotes {
         this.res = response.body();
         //System.out.println(response.body());
     }
-    public String getRes() {
+    public String getRes() throws InterruptedException {
+
+        int responseTime =(int) ((Math.random() * (2000 - 900)) + 900);
+        Thread.sleep(responseTime);
         return res;
     }
 

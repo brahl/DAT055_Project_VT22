@@ -13,6 +13,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.text.DecimalFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import static java.nio.file.LinkOption.NOFOLLOW_LINKS;
 import static java.nio.file.StandardCopyOption.COPY_ATTRIBUTES;
@@ -167,6 +169,7 @@ public class StuartView extends JFrame{
             private void clearAntagningsView() {
                 utbModel.setRowCount(0);
                 antModel.setRowCount(0);
+                cmpModel.setRowCount(0);
             }
 
             private void updateAntagningsView(String query) throws IOException {
@@ -178,6 +181,14 @@ public class StuartView extends JFrame{
                     antModel.addRow(new Object[]{"2019",search.fe.admissionM3});
                     antModel.addRow(new Object[]{"2018",search.fe.admissionM4});
                     antModel.addRow(new Object[]{"2017",search.fe.admissionM5});
+
+                    Double[] compared = compareMerit(search);
+                for (Double aDouble : compared) {
+                    cmpModel.addRow(new Object[]{df.format(aDouble)});
+                }
+
+
+
 
 
 
@@ -222,7 +233,9 @@ public class StuartView extends JFrame{
         sendButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String message = chatField.getText();
+                chatField.setText("");
+                String time = currentTime();
+                String message = "["+nameLabel.getText()+"| "+time+"]:  "+chatField.getText();
                 chatModel.addElement(message);
                 if(message.equals("help")){
                     chatModel.addElement("Tjena! På denna sidan kan du i denna versionen bara söka efter två utbildningar, testa sök på Chalmers eller Handels.");
@@ -232,10 +245,11 @@ public class StuartView extends JFrame{
                 }
                 else if(!message.equals("")){
                     try {
-                        int responseTime =(int) ((Math.random() * (2000 - 900)) + 900);
-                        Thread.sleep(responseTime);
+                        //sleep not working
+
                         Quotes q = new Quotes();
-                        chatModel.addElement(q.getRes());
+                        String resp = "[Stuart| "+time+"]:  "+q.getRes();
+                        chatModel.addElement(resp);
                     } catch (InterruptedException | IOException ex) {
                         ex.printStackTrace();
                     }
@@ -268,6 +282,23 @@ public class StuartView extends JFrame{
 
             }
         });
+    }
+
+    private Double[] compareMerit(Scraper search) {
+        double merit = grades.printGPA();
+        double y1 = merit-Double.parseDouble(search.fe.admissionM1);
+        double y2 = merit-Double.parseDouble(search.fe.admissionM2);
+        double y3 = merit-Double.parseDouble(search.fe.admissionM3);
+        double y4 = merit-Double.parseDouble(search.fe.admissionM4);
+        double y5 = merit-Double.parseDouble(search.fe.admissionM5);
+
+        return new Double[]{y1,y2,y3,y4,y5};
+    }
+
+    private String currentTime() {
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+        LocalDateTime now = LocalDateTime.now();
+        return dtf.format(now);
     }
 
 
