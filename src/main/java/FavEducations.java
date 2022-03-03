@@ -2,6 +2,11 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+/**
+ * Combine this class with its constituent
+ *
+ */
+
 public class FavEducations implements Iterable<FavEducation> {
     private List<FavEducation> FavEducations;
 

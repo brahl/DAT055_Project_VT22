@@ -3,6 +3,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
+import java.io.IOException;
 
 public class LogInPortal extends JFrame implements ActionListener {
 
@@ -59,8 +60,8 @@ public class LogInPortal extends JFrame implements ActionListener {
     }
 
     public void setFonts(){
-        Font myFont = new Font("Serif", Font.BOLD, 30);
-        Font myFont1 = new Font("Serif", Font.BOLD, 15);
+        Font myFont = new Font("Source Code Pro", Font.BOLD, 30);
+        Font myFont1 = new Font("Source Code Pro", Font.BOLD, 15);
         welcomeLabel.setFont(myFont);
         memberLabel.setFont(myFont1);
         passwordLabel.setFont(myFont1);
@@ -119,6 +120,7 @@ public class LogInPortal extends JFrame implements ActionListener {
                 public void actionPerformed(ActionEvent e) {
                     Database.addUser(email.getText(), firstName.getText(), lastName.getText(), password.getText());
                     JOptionPane.showMessageDialog(null, "Account has been created");
+                    frame2.dispose();
                 }
             });
 
@@ -133,7 +135,12 @@ public class LogInPortal extends JFrame implements ActionListener {
             container1.setLayout(null);
             container1.setVisible(true);
 
-            boolean success = tryLogin(userTextField.getText(),passwordField.getText());
+            boolean success = false;
+            try {
+                success = tryLogin(userTextField.getText(),passwordField.getText());
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
             if(success){
                 JLabel logIn = new JLabel("Successful login!");
                 logIn.setBounds(10,10,500,600);
@@ -157,12 +164,13 @@ public class LogInPortal extends JFrame implements ActionListener {
         }
     }
 
-    private boolean tryLogin(String userTextField, String passwordField) {
+    private boolean tryLogin(String userTextField, String passwordField) throws IOException {
          //returns a string or throw message
         user = Database.userExists(userTextField);
         if(!user.equals("")){
              boolean match = Database.passwordMatch(userTextField.toString(),passwordField.toString());
              if(match){
+               this.dispose();
                new StuartView(user);
                return true;
              }

@@ -70,7 +70,7 @@ public class Database {
                         g.kurs = result.substring(charIndex(result, "@", i)+1, charIndex(result, ":", j));
                         g.kurspoäng = result.substring(charIndex(result, ":", j)+1, charIndex(result, ":", j+1));
                         g.lettergrade = result.substring(charIndex(result, ":", j+1)+1, charIndex(result, "@", i+1));
-                        gs.addGrade(new Grade(g.kurs,g.kurspoäng,g.lettergrade));
+                        gs.addGrade(new Grade(g.kurs,g.lettergrade,g.kurspoäng));
                         i++;
                         j = j+2;
                     }
@@ -236,13 +236,14 @@ public class Database {
             e.printStackTrace();
         }
     }
-    public static void addGrade(String userID, String course, String credits, String grade){
+    public static boolean addGrade(String userID, String course, String credits, String grade){
         if(course.contains("@") || course.contains(":") ||
            credits.contains("@") || credits.contains(":") ||
            grade.contains("@") || grade.contains(":")){
             JPanel panel = new JPanel();
             JOptionPane.showMessageDialog(panel, "@ and : are forbidden characters", "Warning", JOptionPane.WARNING_MESSAGE);
-            throw new ArithmeticException("Coursename already exists");
+            return false;
+            //throw new ArithmeticException("Coursename already exists");
         }
         File originalFile = new File("src/main/java/dBase.txt");
         File tempFile = new File("tempfile.txt");
@@ -260,7 +261,9 @@ public class Database {
                     if(line.contains(course)){
                         JPanel panel = new JPanel();
                         JOptionPane.showMessageDialog(panel, "You already have a grade for the course: " + course + " :)", "Warning", JOptionPane.WARNING_MESSAGE);
-                        throw new ArithmeticException("Coursename already exists");
+                        return false;
+                        //throw new ArithmeticException("Coursename already exists");
+
                     }
                     line = line.substring(0, line.lastIndexOf("@"))+ "@" + course + ":" + credits + ":" + grade + "@";
                     i++;
@@ -274,18 +277,19 @@ public class Database {
             // Delete the original file
             if (!originalFile.delete()) {
                 System.out.println("Could not delete file");
-                return;
+                //here was empty
+                return false;
             }
 
             // Rename the new file to the filename the original file had.
             if (!tempFile.renameTo(originalFile))
                 System.out.println("Could not rename file");
-
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return true;
     }
     public static void addTargetEducation(String userID, String programName, String university, String programCredits, String admissionM5, String admissionM4, String admissionM3, String admissionM2, String admissionM1){
         if(programName.contains("@") || programName.contains(":") ||
@@ -327,7 +331,6 @@ public class Database {
                 System.out.println("Could not delete file");
                 return;
             }
-
             // Rename the new file to the filename the original file had.
             if (!tempFile.renameTo(originalFile))
                 System.out.println("Could not rename file");
