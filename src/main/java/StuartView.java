@@ -1,9 +1,14 @@
+import org.imgscalr.Scalr;
+
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -15,7 +20,6 @@ import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 
 public class StuartView extends JFrame{
     private JTabbedPane tabbedPane1;
-    private JPanel profilView;
     private JPanel minaBetygView;
     private JTextField kursField;
     private JTextField pointsField;
@@ -40,7 +44,6 @@ public class StuartView extends JFrame{
     private JPanel AntagningsStat;
     private JTextField searchField;
     private JButton searchStat;
-    private JComboBox urvalsAlt;
 
 
     private JLabel meritLabelAntLabel;
@@ -59,6 +62,13 @@ public class StuartView extends JFrame{
     private JTextField chatField;
     private JButton sendButton;
     private JPanel chatPanel;
+    private JButton redigeraProfilButton;
+    private JButton doneEdit;
+    private JPanel ProfileView;
+    private JPanel userCard;
+    private JPanel profilPanel;
+    private JTable compareMeritTable;
+    private DefaultTableModel cmpModel;
     private DefaultListModel<String> chatModel;
     private String courselistitem;
 
@@ -69,10 +79,10 @@ public class StuartView extends JFrame{
 
     private static final DecimalFormat df = new DecimalFormat("0.00");
 
-    public StuartView(String user){
 
-        chatModel = new DefaultListModel<>();
-        chatMessages.setModel(chatModel);
+    public StuartView(String user) throws IOException {
+
+
         //MyCellRenderer cellRenderer = new MyCellRenderer(80);
         //chatMessages.setCellRenderer(cellRenderer);
         initMinaBetygView(user,db);
@@ -212,22 +222,54 @@ public class StuartView extends JFrame{
         sendButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String message = sendButton.getText();
-               chatModel.addElement(message);
-                try {
-
-                   Quotes q = new Quotes();
-                    chatModel.addElement(q.getRes());
-                } catch (IOException | InterruptedException ex) {
-                    ex.printStackTrace();
+                String message = chatField.getText();
+                chatModel.addElement(message);
+                if(message.equals("help")){
+                    chatModel.addElement("Tjena! På denna sidan kan du i denna versionen bara söka efter två utbildningar, testa sök på Chalmers eller Handels.");
                 }
+                else if(message.equals("hjälp")){
+                    chatModel.addElement("Tjena! På denna sidan kan du i denna versionen bara söka efter två utbildningar, testa sök på Chalmers eller Handels.");
+                }
+                else if(!message.equals("")){
+                    try {
+                        int responseTime =(int) ((Math.random() * (2000 - 900)) + 900);
+                        Thread.sleep(responseTime);
+                        Quotes q = new Quotes();
+                        chatModel.addElement(q.getRes());
+                    } catch (InterruptedException | IOException ex) {
+                        ex.printStackTrace();
+                    }
 
+                }
 
 
 
             }
         });
+        redigeraProfilButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                updateEmail.setVisible(true);
+                updatePassword.setVisible(true);
+                ProfileButton.setVisible(true);
+                redigeraProfilButton.setVisible(false);
+                doneEdit.setVisible(true);
+
+            }
+        });
+        doneEdit.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                updateEmail.setVisible(false);
+                updatePassword.setVisible(false);
+                ProfileButton.setVisible(false);
+                redigeraProfilButton.setVisible(true);
+                doneEdit.setVisible(false);
+
+            }
+        });
     }
+
 
     private void updateCourseLabel(String user) {
         int kp = 0;
@@ -259,6 +301,8 @@ public class StuartView extends JFrame{
 
     private void initAntagningsView(String user) {
         int kp = 0;
+        chatModel = new DefaultListModel<>();
+        chatMessages.setModel(chatModel);
         utbModel = new DefaultTableModel(
                 null,
                 new String[]{"Universitet","Program","Högskolepoäng"}
@@ -268,9 +312,17 @@ public class StuartView extends JFrame{
                 null,
                 new String[]{"År","Antagningspoäng"});
         antTable.setModel(antModel);
+
+        cmpModel = new DefaultTableModel(
+                null,
+                new String[]{"Merit jämförelse"});
+        compareMeritTable.setModel(cmpModel);
+
         for(Grade g : grades){
             kp += Integer.parseInt(g.kurspoäng);
         }
+
+
         sumKp.setText("Summa kurspoäng: " + kp);
         meritLabelAntLabel.setText("Merit: "+df.format(grades.printGPA()));
 
@@ -281,6 +333,11 @@ public class StuartView extends JFrame{
         emailLabel.setText(Database.readEmail(user));
         passwordProfilLabel.setText(Database.readPassword(user));
         meritProfilLabel.setText((df.format(grades.printGPA())));
+        //hide edit profile options
+        updateEmail.setVisible(false);
+        updatePassword.setVisible(false);
+        ProfileButton.setVisible(false);
+        doneEdit.setVisible(false);
     }
 
     /**
@@ -313,9 +370,80 @@ public class StuartView extends JFrame{
 
     }
 
-    private void initProfilePic(String user) {
-        ImageIcon imageIcon = new ImageIcon(new ImageIcon("ProfilePictures/"+ user +".jpg").getImage().getScaledInstance(100, 100, Image.SCALE_DEFAULT));
-        ImageLabel.setIcon(imageIcon);
+    private void initProfilePic(String user) throws IOException {
+        try{
+
+            BufferedImage master =  Scalr.resize(ImageIO.read(new File("ProfilePictures/"+ user +".jpg")),100);
+
+
+            int diameter = Math.min(master.getWidth(), master.getHeight());
+            BufferedImage mask = new BufferedImage(master.getWidth(), master.getHeight(), BufferedImage.TYPE_INT_ARGB);
+
+            Graphics2D g2d = mask.createGraphics();
+            applyQualityRenderingHints(g2d);
+            g2d.fillOval(0, 0, diameter - 1, diameter - 1);
+            g2d.dispose();
+
+            BufferedImage masked = new BufferedImage(diameter, diameter, BufferedImage.TYPE_INT_ARGB);
+            g2d = masked.createGraphics();
+            applyQualityRenderingHints(g2d);
+            int x = (diameter - master.getWidth()) / 2;
+            int y = (diameter - master.getHeight()) / 2;
+            g2d.drawImage(master, x, y, null);
+            g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.DST_IN));
+            g2d.drawImage(mask, 0, 0, null);
+            g2d.dispose();
+
+
+            Scalr.resize(masked,10);
+            //ImageIcon imageIcon = new ImageIcon(new ImageIcon("ProfilePictures/"+ user +".jpg").getImage().getScaledInstance(100, 100, Image.SCALE_DEFAULT));
+            ImageIcon imageIcon = new ImageIcon(masked);
+            ImageLabel.setIcon(imageIcon);
+        } catch (IOException e){
+            BufferedImage master = Scalr.resize(ImageIO.read(new File("ProfilePictures/004.jpg")),100);
+
+
+            int diameter = Math.min(master.getWidth(), master.getHeight());
+            BufferedImage mask = new BufferedImage(master.getWidth(), master.getHeight(), BufferedImage.TYPE_INT_ARGB);
+
+            Graphics2D g2d = mask.createGraphics();
+            applyQualityRenderingHints(g2d);
+            g2d.fillOval(0, 0, diameter - 1, diameter - 1);
+            g2d.dispose();
+
+            BufferedImage masked = new BufferedImage(diameter, diameter, BufferedImage.TYPE_INT_ARGB);
+            g2d = masked.createGraphics();
+            applyQualityRenderingHints(g2d);
+            int x = (diameter - master.getWidth()) / 2;
+            int y = (diameter - master.getHeight()) / 2;
+            g2d.drawImage(master, x, y, null);
+            g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.DST_IN));
+            g2d.drawImage(mask, 0, 0, null);
+            g2d.dispose();
+
+
+            //ImageIcon imageIcon = new ImageIcon(new ImageIcon("ProfilePictures/"+ user +".jpg").getImage().getScaledInstance(100, 100, Image.SCALE_DEFAULT));
+
+            ImageIcon imageIcon = new ImageIcon(masked);
+            ImageLabel.setIcon(imageIcon);
+
+        }
+
+        //ImageLabel.setBorder(new RoundedBorder(Color.WHITE,7));
+
+    }
+
+    public static void applyQualityRenderingHints(Graphics2D g2d) {
+
+        g2d.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION, RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
+        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        g2d.setRenderingHint(RenderingHints.KEY_COLOR_RENDERING, RenderingHints.VALUE_COLOR_RENDER_QUALITY);
+        g2d.setRenderingHint(RenderingHints.KEY_DITHERING, RenderingHints.VALUE_DITHER_ENABLE);
+        g2d.setRenderingHint(RenderingHints.KEY_FRACTIONALMETRICS, RenderingHints.VALUE_FRACTIONALMETRICS_ON);
+        g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+        g2d.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+        g2d.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL, RenderingHints.VALUE_STROKE_PURE);
+
     }
 
 
@@ -323,6 +451,7 @@ public class StuartView extends JFrame{
         StuartPanel.setBackground(Color.WHITE);
         return StuartPanel;
     }
+
 
 
 }
