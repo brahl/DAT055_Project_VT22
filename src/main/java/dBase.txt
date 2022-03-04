@@ -43,7 +43,7 @@ email v
 fName Viktor
 lName Rafstedt
 password q
-grades @
+grades @Abcfdasfdas:100:A@Mmatte:300:A@Mattamatik:100:B@
 fEdus @
 
 007

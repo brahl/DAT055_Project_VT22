@@ -4,49 +4,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 
-class Grade {
-    String kurs;
-    String lettergrade;
-    double grade;
-    String kurspoäng;
-
-    public Grade(){
-        this.kurs= "empty";
-        this.lettergrade="F";
-        this.grade=0;
-        this.kurspoäng="100";
-    }
-
-    public Grade(String k, String lg, String kp){
-        System.out.println("lg=" + lg);
-        System.out.println("kp=" + kp);
-        if(Objects.equals(lg, "A")){
-            this.grade=20;
-        }
-        else if (Objects.equals(lg, "B")){
-            this.grade=17.5;
-        }
-        else if (Objects.equals(lg, "C")){
-            this.grade=15;
-        }
-        else if (Objects.equals(lg, "D")){
-            this.grade=12.5;
-        }
-        else if (Objects.equals(lg, "E")){
-            this.grade=10;
-        }
-        else if (Objects.equals(lg, "F")){
-            this.grade=0;
-        }
-        this.kurs= k;
-        this.lettergrade=lg;
-        this.kurspoäng=kp;
-    }
-}
-
-
 public class Grades implements Iterable<Grade>{
-    private List<Grade> grades;
+    private static List<Grade> grades;
 
     public Grades(){
         grades = new ArrayList<Grade>();
@@ -55,7 +14,7 @@ public class Grades implements Iterable<Grade>{
         grades = new ArrayList<Grade>(kp);
     }
 
-    public void addGrade(Grade g){
+    public static void addGrade(Grade g){
         grades.add(g);
     }
     public void removeGrade(Grade g){
@@ -70,11 +29,11 @@ public class Grades implements Iterable<Grade>{
         double res=0;
         try {
             for (Grade grade : grades) {
-                System.out.println("Grade: " + grade.grade);
-                System.out.println("Kurspoäng: " + grade.kurspoäng);
-                int kp = Integer.parseInt(grade.kurspoäng);
+                System.out.println("Grade: " + grade.getGrade());
+                System.out.println("Kurspoäng: " + grade.getKurspoäng());
+                int kp = Integer.parseInt(grade.getKurspoäng());
                 count += kp;
-                res += grade.grade * kp;
+                res += grade.getGradeInt() * kp;
             }
         } catch (Exception e){
             System.out.println("Fel format på input");
@@ -88,3 +47,4 @@ public class Grades implements Iterable<Grade>{
         return grades.iterator();
     }
 }
+

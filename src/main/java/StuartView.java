@@ -1,4 +1,4 @@
-import org.imgscalr.Scalr;
+//import org.imgscalr.Scalr;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -104,7 +104,7 @@ public class StuartView extends JFrame{
         StatusLabel.setText("Laddar...");
         StatusLabel.setVisible(false);
 
-   addCourse.addActionListener(new ActionListener() {
+        addCourse.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 //add to session
@@ -174,15 +174,15 @@ public class StuartView extends JFrame{
 
             private void updateAntagningsView(String query) throws IOException {
 
-                    Scraper search = new Scraper("BI", query);
-                    utbModel.addRow(new Object[]{search.fe.uni,search.fe.pName,search.fe.credits});
-                    antModel.addRow(new Object[]{"2021",search.fe.admissionM1});
-                    antModel.addRow(new Object[]{"2020",search.fe.admissionM2});
-                    antModel.addRow(new Object[]{"2019",search.fe.admissionM3});
-                    antModel.addRow(new Object[]{"2018",search.fe.admissionM4});
-                    antModel.addRow(new Object[]{"2017",search.fe.admissionM5});
+                Scraper search = new Scraper("BI", query);
+                utbModel.addRow(new Object[]{search.fe.uni,search.fe.pName,search.fe.credits});
+                antModel.addRow(new Object[]{"2021",search.fe.admissionM1});
+                antModel.addRow(new Object[]{"2020",search.fe.admissionM2});
+                antModel.addRow(new Object[]{"2019",search.fe.admissionM3});
+                antModel.addRow(new Object[]{"2018",search.fe.admissionM4});
+                antModel.addRow(new Object[]{"2017",search.fe.admissionM5});
 
-                    Double[] compared = compareMerit(search);
+                Double[] compared = compareMerit(search);
                 for (Double aDouble : compared) {
                     cmpModel.addRow(new Object[]{df.format(aDouble)});
                 }
@@ -203,9 +203,9 @@ public class StuartView extends JFrame{
                     String newPic = JOptionPane.showInputDialog("Enter source path to your profile picture");
                     if(!newPic.substring(newPic.length()-3).equals("jpg")){
                         System.out.println(newPic.substring(newPic.length()-3));
-                            JPanel panel = new JPanel();
-                            JOptionPane.showMessageDialog(panel, "Image format has to be .jpg", "Warning", JOptionPane.WARNING_MESSAGE);
-                            throw new ArithmeticException("Not jpeg");
+                        JPanel panel = new JPanel();
+                        JOptionPane.showMessageDialog(panel, "Image format has to be .jpg", "Warning", JOptionPane.WARNING_MESSAGE);
+                        throw new ArithmeticException("Not jpeg");
                     }
                     Path bytes = Files.copy(new java.io.File(newPic).toPath(),
                             new java.io.File("ProfilePictures/"+user+".jpg").toPath(),
@@ -308,8 +308,9 @@ public class StuartView extends JFrame{
         courseModel.setRowCount(0);
         grades = db.readDatabaseGrades(user);
         for(Grade g : grades){
-            courseModel.addRow(new Object[]{g.kurs,g.lettergrade,g.kurspoäng});
-            kp += Integer.parseInt(g.kurspoäng);
+
+            courseModel.addRow(new Object[]{g.getkurs(), g.getGrade(), g.getKurspoäng()});
+            kp += Integer.parseInt(g.getKurspoäng());
         }
         sumKp.setText("Summa kurspoäng: " + kp);
         meritLabel.setText("Merit: "+ df.format(grades.printGPA()));
@@ -350,7 +351,7 @@ public class StuartView extends JFrame{
         compareMeritTable.setModel(cmpModel);
 
         for(Grade g : grades){
-            kp += Integer.parseInt(g.kurspoäng);
+            kp += Integer.parseInt(g.getKurspoäng());
         }
 
 
@@ -394,17 +395,17 @@ public class StuartView extends JFrame{
         Grades gs = db.readDatabaseGrades(user);
 
         for(Grade g : gs){
-            System.out.println(g.kurs);
-            grades.addGrade(new Grade(g.kurs, g.lettergrade, g.kurspoäng));
-            courseModel.addRow(new Object[]{g.kurs,g.lettergrade,g.kurspoäng});
+            System.out.println(g.getGrade());
+            //gs.addGrade(new Grade(g.getkurs(), g.getGrade(), g.getKurspoäng()));
+            courseModel.addRow(new Object[]{g.getkurs(), g.getGrade(), g.getKurspoäng()});
         }
 
     }
 
     private void initProfilePic(String user) throws IOException {
-        try{
+        //try{
 
-            BufferedImage master =  Scalr.resize(ImageIO.read(new File("ProfilePictures/"+ user +".jpg")),100);
+           /* BufferedImage master =  Scalr.resize(ImageIO.read(new File("ProfilePictures/"+ user +".jpg")),100);
 
 
             int diameter = Math.min(master.getWidth(), master.getHeight());
@@ -458,11 +459,13 @@ public class StuartView extends JFrame{
             ImageIcon imageIcon = new ImageIcon(masked);
             ImageLabel.setIcon(imageIcon);
 
+            */
+
         }
 
         //ImageLabel.setBorder(new RoundedBorder(Color.WHITE,7));
 
-    }
+    //}
 
     public static void applyQualityRenderingHints(Graphics2D g2d) {
 
@@ -486,5 +489,6 @@ public class StuartView extends JFrame{
 
 
 }
+
 
 
