@@ -125,10 +125,12 @@ public class Database {
                     int j = 0;
                     while(i <= amountOfGrades-2){
                         String kurs = result.substring(charIndex(result, "@", i)+1, charIndex(result, ":", j));
-                        String grade =  result.substring(charIndex(result, ":", j)+1, charIndex(result, ":", j+1));
-                        String kurspoäng = result.substring(charIndex(result, ":", j+1)+1, charIndex(result, "@", i+1));
-                        Grade g = new Grade(kurs, kurspoäng, grade);
+                        String kurspoäng =  result.substring(charIndex(result, ":", j)+1, charIndex(result, ":", j+1));
+                        String grade = result.substring(charIndex(result, ":", j+1)+1, charIndex(result, "@", i+1));
+                        Grade g = new Grade(kurs, grade, kurspoäng);
                         gs.addGrade(g);
+
+
                         i++;
                         j = j+2;
                     }
@@ -329,6 +331,18 @@ public class Database {
             return false;
             //throw new ArithmeticException("Coursename already exists");
         }
+        if(!(grade.equals("A") || grade.equals("B") || grade.equals("C") || grade.equals("D") || grade.equals("E") || grade.equals("F"))){
+            JPanel panel = new JPanel();
+            JOptionPane.showMessageDialog(panel, "The grade must be either A,B,C,D,E or F in capital letter, your input was: " + grade, "Warning", JOptionPane.WARNING_MESSAGE);
+            return false;
+        }
+        try{
+            Integer.parseInt(credits);
+        }catch(NumberFormatException e){
+            JPanel panel = new JPanel();
+            JOptionPane.showMessageDialog(panel, "The course credits must be a positive integer, your input was: " + credits, "Warning", JOptionPane.WARNING_MESSAGE);
+            return false;
+        }
         File originalFile = new File(defFilePath);
         File tempFile = new File("tempfile.txt");
 
@@ -342,7 +356,7 @@ public class Database {
                     i++;
                 }
                 if (line.contains("grades") && i == 1) {
-                    if(line.contains(course)){
+                    if(line.contains(course + ":")){
                         JPanel panel = new JPanel();
                         JOptionPane.showMessageDialog(panel, "You already have a grade for the course: " + course + " :)", "Warning", JOptionPane.WARNING_MESSAGE);
                         return false;

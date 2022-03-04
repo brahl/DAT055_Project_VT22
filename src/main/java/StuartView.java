@@ -87,8 +87,6 @@ public class StuartView extends JFrame{
 
 
     public StuartView(String user) throws IOException, InterruptedException {
-
-
         initMinaBetygView(user,db);
         initProfilView(user);
         initProfilePic(user);
