@@ -202,7 +202,7 @@ public class Database {
                         index--;
                     }
                     String result = scanner.nextLine();
-                    finalResult = result.substring(result.indexOf(" "));
+                    finalResult = result.substring(result.indexOf(" ")+1);
                 }
             }
             //scanner.close();

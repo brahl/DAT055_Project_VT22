@@ -5,36 +5,32 @@ import static org.junit.jupiter.api.Assertions.*;
 class DatabaseTest {
 
     @Test
-    void readEmail() {
+    void readAndUpdateEmail() {
+        String x = Database.readEmail("001");
+        Database.updateEmail("001",x);
+        assertEquals(x, Database.readEmail("001"));
 
     }
 
     @Test
-    void readFirstName() {
+    void readAndUpdateFirstName() {
+        String x = Database.readFirstName("001");
+        Database.updateFirstName("001",x);
+        assertEquals(x,Database.readFirstName("001"));
     }
 
     @Test
-    void readLastName() {
+    void readAndUpdateLastName() {
+        String x = Database.readLastName("001");
+        Database.updateLastName("001",x);
+        assertEquals(x,Database.readLastName("001"));
     }
 
     @Test
-    void readPassword() {
-    }
-
-    @Test
-    void updateEmail() {
-    }
-
-    @Test
-    void updateFirstName() {
-    }
-
-    @Test
-    void updateLastName() {
-    }
-
-    @Test
-    void updatePassword() {
+    void readAndUpdatePassword() {
+        String x = Database.readPassword("001");
+        Database.updatePassword("001",x);
+        assertEquals(x,Database.readPassword("001"));
     }
 
     @Test

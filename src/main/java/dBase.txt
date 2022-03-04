@@ -1,9 +1,9 @@
 001
-email freddan.breddan@gmail.com
-fName Fredrik
+email master.user@email.com
+fName abc
 lName Reinfeldt
 password qwerty
-grades @Svenska:100:A@Engelska:100:A@Matte:100:C@Datateknik:100:A@Programmering i Java:100:A@Fysik 1:50:A@Fysik:100:A@
+grades @Svenska:100:A@Engelska:100:A@Matte:100:C@Datateknik:100:A@Programmering i Java:100:A@Fysik 1:50:A@Fysik:100:A@Abc:100:A@
 fEdus @Datateknik:Chalmers:180hp:18.23:17.23:17.23:17.23:15.55@
 
 002
@@ -43,7 +43,7 @@ email v
 fName Viktor
 lName Rafstedt
 password q
-grades @Abcfdasfdas:100:A@Mmatte:300:A@Mattamatik:100:B@
+grades @Abcfdasfdas:100:A@Mmatte:300:A@Mattamatik:100:B@ABC:100:A@
 fEdus @
 
 007
