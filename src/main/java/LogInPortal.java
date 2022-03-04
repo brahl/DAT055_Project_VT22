@@ -140,6 +140,8 @@ public class LogInPortal extends JFrame implements ActionListener {
                 success = tryLogin(userTextField.getText(),passwordField.getText());
             } catch (IOException ex) {
                 ex.printStackTrace();
+            } catch (InterruptedException ex) {
+                ex.printStackTrace();
             }
             if(success){
                 JLabel logIn = new JLabel("Successful login!");
@@ -164,7 +166,7 @@ public class LogInPortal extends JFrame implements ActionListener {
         }
     }
 
-    private boolean tryLogin(String userTextField, String passwordField) throws IOException {
+    private boolean tryLogin(String userTextField, String passwordField) throws IOException, InterruptedException {
          //returns a string or throw message
         user = Database.userExists(userTextField);
         if(!user.equals("")){

@@ -12,8 +12,8 @@ public class App {
         frame.setBounds(10, 10, 500, 600);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setResizable(false);
-        new App();
+        //new App();
         //uncomment for testing
-        //new StuartView(user);
+        new StuartView(user);
     }
 }
