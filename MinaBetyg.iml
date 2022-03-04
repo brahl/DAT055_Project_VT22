@@ -38,5 +38,15 @@
         <SOURCES />
       </library>
     </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library>
+        <CLASSES>
+          <root url="file://$USER_HOME$/Downloads/imgscalr-lib-4.2.jar" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+        <jarDirectory url="file://$USER_HOME$/Downloads/imgscalr-lib-4.2.jar" recursive="false" />
+      </library>
+    </orderEntry>
   </component>
 </module>
