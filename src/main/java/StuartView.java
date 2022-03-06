@@ -6,15 +6,13 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ComponentAdapter;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.text.DecimalFormat;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+
 
 import static java.nio.file.LinkOption.NOFOLLOW_LINKS;
 import static java.nio.file.StandardCopyOption.COPY_ATTRIBUTES;
@@ -61,8 +59,7 @@ public class StuartView extends JFrame{
     private JButton tabortButton;
     private JLabel sumKp;
     private JList<String> chatMessages;
-    private JTextField chatField;
-    private JButton sendButton;
+    private JButton chattButton;
     private JPanel chatPanel;
     private JButton redigeraProfilButton;
     private JButton doneEdit;
@@ -73,7 +70,8 @@ public class StuartView extends JFrame{
     private DefaultTableModel cmpModel;
     private DefaultListModel<String> chatModel;
     private String courselistitem;
-    private Chat chat;
+
+
 
 
     JFrame frame = new JFrame("STU.ART");
@@ -174,30 +172,18 @@ public class StuartView extends JFrame{
 
             private void updateAntagningsView(String query) throws IOException {
 
-                Scraper search = new Scraper("BI", query);
-                utbModel.addRow(new Object[]{search.fe.uni,search.fe.pName,search.fe.credits});
-                antModel.addRow(new Object[]{"2021",search.fe.admissionM1});
-                antModel.addRow(new Object[]{"2020",search.fe.admissionM2});
-                antModel.addRow(new Object[]{"2019",search.fe.admissionM3});
-                antModel.addRow(new Object[]{"2018",search.fe.admissionM4});
-                antModel.addRow(new Object[]{"2017",search.fe.admissionM5});
+                    AdmissionsScraper search = new AdmissionsScraper("BI", query);
+                    utbModel.addRow(new Object[]{search.fe.uni,search.fe.pName,search.fe.credits});
+                    antModel.addRow(new Object[]{"2021",search.fe.admissionM1});
+                    antModel.addRow(new Object[]{"2020",search.fe.admissionM2});
+                    antModel.addRow(new Object[]{"2019",search.fe.admissionM3});
+                    antModel.addRow(new Object[]{"2018",search.fe.admissionM4});
+                    antModel.addRow(new Object[]{"2017",search.fe.admissionM5});
 
-                Double[] compared = compareMerit(search);
+                    Double[] compared = compareMerit(search);
                 for (Double aDouble : compared) {
                     cmpModel.addRow(new Object[]{df.format(aDouble)});
                 }
-
-
-
-                /* Hatar java
-                 //int count = cmpModel.getRowCount();
-                //for(int j = 0 ; j < count ; j++){
-                    TableColumn col = compareMeritTable.getColumnModel().getColumn(0);
-                    col.setCellRenderer(new CustomRenderTable());
-                //}
-                 */
-
-
 
 
 
@@ -215,9 +201,9 @@ public class StuartView extends JFrame{
                     String newPic = JOptionPane.showInputDialog("Enter source path to your profile picture");
                     if(!newPic.substring(newPic.length()-3).equals("jpg")){
                         System.out.println(newPic.substring(newPic.length()-3));
-                        JPanel panel = new JPanel();
-                        JOptionPane.showMessageDialog(panel, "Image format has to be .jpg", "Warning", JOptionPane.WARNING_MESSAGE);
-                        throw new ArithmeticException("Not jpeg");
+                            JPanel panel = new JPanel();
+                            JOptionPane.showMessageDialog(panel, "Image format has to be .jpg", "Warning", JOptionPane.WARNING_MESSAGE);
+                            throw new ArithmeticException("Not jpeg");
                     }
                     Path bytes = Files.copy(new java.io.File(newPic).toPath(),
                             new java.io.File("ProfilePictures/"+user+".jpg").toPath(),
@@ -240,42 +226,28 @@ public class StuartView extends JFrame{
                 updateCourseLabel(user);
             }
         });
-        chatMessages.addComponentListener(new ComponentAdapter() {
-        });
-        sendButton.addActionListener(new ActionListener() {
+
+        chattButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                //Kod för att köra jarfil
 
-                chatField.setText("");
-                String time = currentTime();
-                String message = "["+nameLabel.getText()+"| "+time+"]:  "+chatField.getText();
-                chat.sendMessage(message);
+                try{
+                    Desktop.getDesktop().open(new File("ServerChat/ChatFunction.jar"));
 
-                chatModel.addElement(message);
-
-
-                if(message.equals("help")){
-                    chatModel.addElement("Tjena! På denna sidan kan du i denna versionen bara söka efter två utbildningar, testa sök på Chalmers eller Handels.");
-                }
-                else if(message.equals("hjälp")){
-                    chatModel.addElement("Tjena! På denna sidan kan du i denna versionen bara söka efter två utbildningar, testa sök på Chalmers eller Handels.");
-                }
-                else if(!message.equals("")){
-                    try {
-                        //sleep not working
-
-                        Quotes q = new Quotes();
-                        String resp = "[Stuart| "+time+"]:  "+q.getRes();
-                        chatModel.addElement(resp);
-                    } catch (InterruptedException | IOException ex) {
-                        ex.printStackTrace();
-                    }
-
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
                 }
 
+                try{
+                    Desktop.getDesktop().open(new File("ClientChat/ChatFunction.jar"));
 
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                }
 
             }
+
         });
         redigeraProfilButton.addActionListener(new ActionListener() {
             @Override
@@ -302,63 +274,9 @@ public class StuartView extends JFrame{
 
     }
 
-/*
-    public class CustomRenderTable extends DefaultTableCellRenderer {
-        @Override
-        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int col) {
-
-            //Cells are by default rendered as a JLabel.
-            JLabel l = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, col);
-
-            //Get the status for the current row.
 
 
-            DefaultTableModel tableModel = (DefaultTableModel) compareMeritTable.getModel();
-
-            int i = tableModel.getRowCount();
-
-            for (int j = 0; j < i; j++) {
-                String fuckJava = tableModel.getValueAt(j, 0).toString().replace(",",".");
-                String res = fuckJava.substring(0,1);
-                if(res.equals("−")){
-                    fuckJava = fuckJava.replace(res,"-");
-                }
-
-                System.out.println(res);
-                boolean test = false;
-                if(res.equals("−")){
-                    test = true;
-                }
-                //System.out.println(fuckJava+" "+test);
-                float meritDiff = Float.parseFloat(fuckJava);
-                float fuckJavatvå = meritDiff*(float)1000;
-
-                System.out.println((int)fuckJavatvå);
-
-                //System.out.println(meritDiff);
-                if((int)fuckJavatvå>0){
-                    l.setBackground(Color.GREEN);
-                }
-                else{
-                    l.setBackground(Color.RED);
-                }
-
-            }
-
-            // Integer.parseInt(tableModel.getValueAt(i,1).toString());
-
-
-
-            //Return the JLabel which renders the cell.
-            //return l;
-            return l;
-        }
-    }
-
-
- */
-
-    private Double[] compareMerit(Scraper search) {
+    private Double[] compareMerit(AdmissionsScraper search) {
         double merit = grades.printGPA();
         double y1 = merit-Double.parseDouble(search.fe.admissionM1);
         double y2 = merit-Double.parseDouble(search.fe.admissionM2);
@@ -369,11 +287,6 @@ public class StuartView extends JFrame{
         return new Double[]{y1,y2,y3,y4,y5};
     }
 
-    private String currentTime() {
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
-        LocalDateTime now = LocalDateTime.now();
-        return dtf.format(now);
-    }
 
 
     private void updateCourseLabel(String user) {
@@ -407,11 +320,6 @@ public class StuartView extends JFrame{
 
     private void initAntagningsView(String user) throws IOException, InterruptedException {
         int kp = 0;
-
-        chat = new Chat();
-
-        chatModel = new DefaultListModel<>();
-        chatMessages.setModel(chatModel);
 
 
 
@@ -470,7 +378,7 @@ public class StuartView extends JFrame{
      * Reads grades for user in database, adds to listmodel.
      * @param user target user
      */
-    public void initCourseLabel(String user, Database db) {
+    private void initCourseLabel(String user, Database db) {
         courseModel.setRowCount(0);
         Grades gs = db.readDatabaseGrades(user);
 
@@ -547,7 +455,9 @@ public class StuartView extends JFrame{
 
     }
 
-    public static void applyQualityRenderingHints(Graphics2D g2d) {
+
+
+    private static void applyQualityRenderingHints(Graphics2D g2d) {
 
         g2d.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION, RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
@@ -561,7 +471,7 @@ public class StuartView extends JFrame{
     }
 
 
-    public Component showView() {
+    private Component showView() {
         StuartPanel.setBackground(Color.WHITE);
         return StuartPanel;
     }

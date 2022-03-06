@@ -3,7 +3,6 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import javax.swing.*;
 import java.io.*;
 import java.util.Scanner;
 
@@ -11,9 +10,9 @@ import java.util.Scanner;
  * Rename this class to search
  */
 
-public class Scraper {
-    FavEducation fe = new FavEducation();
-    public Scraper(String admissionType,String query) throws IOException {
+public class AdmissionsScraper {
+    AdmissionResult fe = new AdmissionResult();
+    public AdmissionsScraper(String admissionType, String query) throws IOException {
         scrape(admissionType, query);
     }
 
@@ -42,7 +41,7 @@ public class Scraper {
 
     }
 
-    public FavEducation writeToTemp(String s, String admissionType,String query) throws FileNotFoundException {
+    public AdmissionResult writeToTemp(String s, String admissionType, String query) throws FileNotFoundException {
         String result;
         Scanner scanner = new Scanner(s);
         System.out.println(s);

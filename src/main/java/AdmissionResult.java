@@ -3,7 +3,7 @@
  */
 
 
-public class FavEducation {
+public class AdmissionResult {
     String pName;
     String uni;
     String credits;
@@ -13,7 +13,7 @@ public class FavEducation {
     String admissionM2;
     String admissionM1;
 
-    public FavEducation(){
+    public AdmissionResult(){
         this.pName= "";
         this.uni = "";
         this.credits = "";
@@ -24,7 +24,7 @@ public class FavEducation {
         this.admissionM1 = "";
     }
 
-    public FavEducation(String pName, String uni, String credits, String admissionM1, String admissionM2, String admissionM3, String admissionM4, String admissionM5){
+    public AdmissionResult(String pName, String uni, String credits, String admissionM1, String admissionM2, String admissionM3, String admissionM4, String admissionM5){
     }
     /*public favEducation(String name, String lg, String kp){
         if(Objects.equals(lg, "A")){

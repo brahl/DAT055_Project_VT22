@@ -11,10 +11,10 @@ import java.io.PrintWriter;
 public class Database {
     Grades gs = new Grades();
 
-    FavEducations fes = new FavEducations();
-    FavEducation fe = new FavEducation();
+    AdmissionResults fes = new AdmissionResults();
+    AdmissionResult fe = new AdmissionResult();
     
-    private static final String defFilePath = "src/main/java/dBase.txt";
+    private static final String defFilePath = "dBase.txt";
 
     /**
      * Standard constructor for the Database class
@@ -148,7 +148,7 @@ public class Database {
      * @param userID
      * @return A list of favEducation objects
      */
-    public FavEducations readDatabaseFavCourses(String userID){
+    public AdmissionResults readDatabaseFavCourses(String userID){
         try (Scanner scanner = new Scanner(new File(defFilePath));){
             while (scanner.hasNextLine()) {
                 if(scanner.nextLine().equals(userID)) {
