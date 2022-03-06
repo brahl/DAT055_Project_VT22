@@ -1,10 +1,10 @@
 001
-email freddan.breddan@gmail.com
-fName Fredrik
+email master.user@email.com
+fName abc
 lName Reinfeldt
 password qwerty
-grades @Svenska:100:A@Engelska:100:A@Matte:100:C@Datateknik:100:A@Programmering i Java:100:A@Fysik 1:50:A@
-fEdus @Programnamn:skola:courseCredits:antagningspoängår-5:apår-4:apår-3:apår-2:apår-1:apår0@Datateknik:Chalmers:180hp:18.23:17.23:17.23:17.23:15.55@
+grades @Svenska:100:A@Engelska:100:A@Matte:100:C@Datateknik:100:A@Programmering i Java:100:A@Fysik 1:50:A@Fysik:100:A@Abc:100:A@
+fEdus @Datateknik:Chalmers:180hp:18.23:17.23:17.23:17.23:15.55@
 
 002
 email johbirger@gmail.com
@@ -12,22 +12,22 @@ fName Johan
 lName Birgersson
 password q
 grades @Svenska:100:A@Engelska:100:A@Matte:100:C@
-fEdus @Programnamn:skola:courseCredits:antagningspoängår-5:apår-4:apår-3:apår-2:apår-1:apår0@Datateknik:Chalmers:180hp:18.23:17.23:17.23:17.23:15.55@
+fEdus @Datateknik:Chalmers:180hp:18.23:17.23:17.23:17.23:15.55@
 
 003
 email lukas.lidvall@gmail.com
 fName Lukas
 lName Lidvall
 password qwerty
-grades @kursnamn:courseCredits:betyg@Svenska1:20:D@Svenska 2:20:A@Svenska 3:20:A@
-fEdus @Programnamn:skola:courseCredits:antagningspoängår-5:apår-4:apår-3:apår-2:apår-1:apår0@Datateknik:Chalmers:180hp:18.23:17.23:17.23:17.23:15.55@
+grades @Svenska1:20:D@Svenska 2:20:A@Svenska 3:20:A@
+fEdus @Datateknik:Chalmers:180hp:18.23:17.23:17.23:17.23:15.55@
 
 004
 email bad.gastain@visitaustria.com
 fName Berran
 lName Erran
 password qwerty
-grades @Svenska1:20:A+@Svenska 2:20:B+@Svenska 3:20:C++@hejsan:20:A@
+grades @Svenska1:20:A@Svenska 2:20:B@Svenska 3:20:C@hejsan:20:A@
 fEdus @Datateknik:Chalmers:180hp:18.23:17.23:17.23:17.23:15.55@
 
 005
@@ -36,14 +36,14 @@ fName Anja
 lName Banja
 password q
 grades @hejsan:20:A@matte:100:D@
-fEdus @Programnamn:skola:courseCredits:antagningspoängår-5:apår-4:apår-3:apår-2:apår-1:apår0@Datateknik:Chalmers:180hp:18.23:17.23:17.23:17.23:15.55@
+fEdus @Datateknik:Chalmers:180hp:18.23:17.23:17.23:17.23:15.55@
 
 006
 email v
 fName Viktor
 lName Rafstedt
 password q
-grades @
+grades @Abcfdasfdas:100:A@Mmatte:300:A@Mattamatik:100:B@ABC:100:A@
 fEdus @
 
 007
@@ -52,7 +52,7 @@ fName Johan
 lName Birgersson
 password q
 grades @Svenska:100:A@Engelska:100:A@Matte:100:C@
-fEdus @Programnamn:skola:courseCredits:antagningspoängår-5:apår-4:apår-3:apår-2:apår-1:apår0@Datateknik:Chalmers:180hp:18.23:17.23:17.23:17.23:15.55@
+fEdus @Datateknik:Chalmers:180hp:18.23:17.23:17.23:17.23:15.55@
 
 008
 email Juan@gmail.com
