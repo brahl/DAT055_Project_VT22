@@ -14,7 +14,7 @@ public class Database {
     AdmissionResults fes = new AdmissionResults();
     AdmissionResult fe = new AdmissionResult();
     
-    private static final String defFilePath = "dBase.txt";
+    private static final String defFilePath = "src/main/java/dBase.txt";
 
     /**
      * Standard constructor for the Database class
