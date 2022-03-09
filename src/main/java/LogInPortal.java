@@ -5,6 +5,12 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
 
+/**
+ * @author Anja Tomovic
+ * @version 1
+ *
+ */
+
 public class LogInPortal extends JFrame implements ActionListener {
 
     Container container = getContentPane();

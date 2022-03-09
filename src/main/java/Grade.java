@@ -3,6 +3,11 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
+/**
+ * @author Johan Birgersson
+ * @version 1
+ *
+ */
 
 class Grade {
     private String kurs;

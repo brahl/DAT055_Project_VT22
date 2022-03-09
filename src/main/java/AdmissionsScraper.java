@@ -5,9 +5,10 @@ import org.jsoup.select.Elements;
 
 import java.io.*;
 import java.util.Scanner;
-
 /**
- * Rename this class to search
+ * @author Lukas Lidvall
+ * @version 1
+ *
  */
 
 public class AdmissionsScraper {

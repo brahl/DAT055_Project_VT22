@@ -1,3 +1,9 @@
+/**
+ * @author Viktor Rafstedt
+ * @version 1
+ *
+ */
+
 import javax.swing.*;
 import java.util.Scanner;
 import java.io.File;

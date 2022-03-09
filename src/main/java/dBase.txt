@@ -14,61 +14,12 @@ password q
 grades @Svenska:100:A@Engelska:100:A@Matte:100:C@
 fEdus @Datateknik:Chalmers:180hp:18.23:17.23:17.23:17.23:15.55@
 
+
 003
-email lukas.lidvall@gmail.com
-fName Lukas
-lName Lidvall
-password qwerty
-grades @Svenska1:20:D@Svenska 2:20:A@Svenska 3:20:A@
-fEdus @Datateknik:Chalmers:180hp:18.23:17.23:17.23:17.23:15.55@
-
-004
-email bad.gastain@visitaustria.com
-fName Berran
-lName Erran
-password qwerty
-grades @Svenska1:20:A@Svenska 2:20:B@Svenska 3:20:C@hejsan:20:A@
-fEdus @Datateknik:Chalmers:180hp:18.23:17.23:17.23:17.23:15.55@
-
-005
-email anja@tomovic.se
-fName Anja
-lName Banja
-password q
-grades @hejsan:20:A@matte:100:D@
-fEdus @Datateknik:Chalmers:180hp:18.23:17.23:17.23:17.23:15.55@
-
-006
-email v
-fName Viktor
-lName Rafstedt
-password q
-grades @Abcfdasfdas:100:A@Mmatte:300:A@Mattamatik:100:B@ABC:100:A@
-fEdus @
-
-007
-email johan@gmail.com
-fName Johan
-lName Birgersson
-password q
-grades @Svenska:100:A@Engelska:100:A@Matte:100:C@
-fEdus @Datateknik:Chalmers:180hp:18.23:17.23:17.23:17.23:15.55@
-
-008
-email Juan@gmail.com
-fName Juan
-lName Burgersson
-password q
-grades @Spanska:100:A@Spanska 2:100:A@Spanska 100:100:A@Spanska -1:100:F@
-fEdus @
-
-
-
-009
-email johankoddar@gmail.com
-fName joh
-lName koddar
-password q
-grades @Svenska 1:100:A@Svenska 2:100:A@Datateknik:80:B@
+email hej
+fName hej
+lName hej
+password hej
+grades @
 fEdus @
 

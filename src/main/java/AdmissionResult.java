@@ -1,5 +1,7 @@
 /**
- * rename this to AntagningsStatistik
+ * @author Viktor Rafstedt
+ * @version 1
+ *
  */
 
 
