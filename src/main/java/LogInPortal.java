@@ -5,6 +5,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
 
+
+
 /**
  * @author Anja Tomovic
  * @version 1
@@ -124,9 +126,15 @@ public class LogInPortal extends JFrame implements ActionListener {
 
             caButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
-                    Database.addUser(email.getText(), firstName.getText(), lastName.getText(), password.getText());
-                    JOptionPane.showMessageDialog(null, "Account has been created");
-                    frame2.dispose();
+                    if(validateEmail(email.getText())){
+                        Database.addUser(email.getText(), firstName.getText(), lastName.getText(), password.getText());
+                        JOptionPane.showMessageDialog(null, "Account has been created");
+                        frame2.dispose();
+                    }
+                    else{
+                        JOptionPane.showMessageDialog(null,"Invalid Email");
+                    }
+
                 }
             });
 
@@ -170,6 +178,10 @@ public class LogInPortal extends JFrame implements ActionListener {
                 passwordField.setEchoChar('*');
             }
         }
+    }
+
+    private boolean validateEmail(String e) {
+        return e.contains("@") && e.contains(".");
     }
 
     private boolean tryLogin(String userTextField, String passwordField) throws IOException, InterruptedException {

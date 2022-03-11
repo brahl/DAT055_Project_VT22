@@ -1,9 +1,9 @@
 001
-email master.user@email.com
+email hej@gmail.om
 fName abc
 lName Reinfeldt
 password qwerty
-grades @Svenska:100:A@Engelska:100:A@Matte:100:C@Datateknik:100:A@Programmering i Java:100:A@Fysik 1:50:A@Fysik:100:A@Hej:100:A@
+grades @Svenska:100:A@Engelska:100:A@Matte:100:C@Datateknik:100:A@Programmering i Java:100:A@Fysik 1:50:A@Fysik:100:A@Hej:100:A@Prresneteation:100:F@
 fEdus @Datateknik:Chalmers:180hp:18.23:17.23:17.23:17.23:15.55@
 
 002
@@ -11,12 +11,27 @@ email johbirger@gmail.com
 fName Johan
 lName Birgersson
 password q
-grades @Svenska:100:A@Engelska:100:A@Matte:100:C@
+grades @Svenska:100:A@Engelska:100:A@
 fEdus @Datateknik:Chalmers:180hp:18.23:17.23:17.23:17.23:15.55@
-
 
 003
 email hej
+fName hej
+lName hej
+password hej
+grades @Kurs:100:A@
+fEdus @
+
+004
+email hej@hej.com
+fName hej
+lName hej
+password hej
+grades @
+fEdus @
+
+005
+email hej@gmail.com
 fName hej
 lName hej
 password hej

@@ -1,5 +1,5 @@
 import org.imgscalr.Scalr;
-import Server.*;
+//import Server.*;
 import chatfunction.ChatClient;
 
 import javax.imageio.ImageIO;
@@ -14,7 +14,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.text.DecimalFormat;
-
 
 import static java.nio.file.LinkOption.NOFOLLOW_LINKS;
 import static java.nio.file.StandardCopyOption.COPY_ATTRIBUTES;
@@ -233,9 +232,8 @@ public class StuartView extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 //Kod för att köra jarfil
-
                 try{
-                    Desktop.getDesktop().open(new File("src/main/java/ChatFunction.jar"));
+                    Desktop.getDesktop().open(new File("src/main/java/chatfunction/HostServer.jar"));
                     new ChatClient();
 
                 } catch (IOException ioException) {

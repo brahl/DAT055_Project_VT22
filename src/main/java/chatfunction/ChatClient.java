@@ -38,7 +38,7 @@ public class ChatClient extends JFrame implements ActionListener
 
     public void initChatView(){
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-        this.setSize(700,500);
+        this.setSize(900,500);
         this.setResizable(false);
         this.setLocation(500,500);
         setLayoutManager();
@@ -56,7 +56,7 @@ public class ChatClient extends JFrame implements ActionListener
 
     public void setLocationAndSize(){
         chatMessages.setModel(chatModel);
-        chatMessages.setBounds(0,0,700,400);
+        chatMessages.setBounds(0,0,900,400);
         textField.setBounds(0,400,150,30);
         sendButton.setBounds(180,400,100,30);
 
