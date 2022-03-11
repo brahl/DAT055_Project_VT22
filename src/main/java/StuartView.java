@@ -388,7 +388,7 @@ public class StuartView extends JFrame{
     private void initProfilePic(String user) throws IOException {
         try{
 
-           BufferedImage master =  Scalr.resize(ImageIO.read(new File("ProfilePictures/"+ user +".jpg")),100);
+           BufferedImage master =  Scalr.resize(ImageIO.read(new File("src/main/resources/ProfilePictures/"+ user +".jpg")),100);
 
 
             int diameter = Math.min(master.getWidth(), master.getHeight());
