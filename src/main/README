@@ -1,0 +1,3 @@
+dBase.txt is required to have exactly two empty rows under
+the last account in order for new accounts to be properly added.
+The database is only able to handle a maximum of 9 accounts at the moment.

@@ -14,27 +14,3 @@ password q
 grades @Svenska:100:A@Engelska:100:A@
 fEdus @Datateknik:Chalmers:180hp:18.23:17.23:17.23:17.23:15.55@
 
-003
-email hej
-fName hej
-lName hej
-password hej
-grades @Kurs:100:A@
-fEdus @
-
-004
-email hej@hej.com
-fName hej
-lName hej
-password hej
-grades @
-fEdus @
-
-005
-email hej@gmail.com
-fName hej
-lName hej
-password hej
-grades @
-fEdus @
-

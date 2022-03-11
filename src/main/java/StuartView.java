@@ -207,7 +207,7 @@ public class StuartView extends JFrame{
                             throw new ArithmeticException("Not jpeg");
                     }
                     Path bytes = Files.copy(new java.io.File(newPic).toPath(),
-                            new java.io.File("ProfilePictures/"+user+".jpg").toPath(),
+                            new java.io.File("resources/ProfilePictures/"+user+".jpg").toPath(),
                             REPLACE_EXISTING,
                             COPY_ATTRIBUTES,
                             NOFOLLOW_LINKS);

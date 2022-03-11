@@ -52,7 +52,6 @@ public class LogInPortal extends JFrame implements ActionListener {
         loginButton.setBounds(180,300,100,30);
         memberLabel.setBounds(150,350,500,30);
         createAccountButton.setBounds(140,400,200,30);
-
     }
 
     public void addComponentsToWindow(){
